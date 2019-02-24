@@ -14,7 +14,8 @@ class Bot(commands.Bot):
         self.owners = [217462890364403712]
         self.initial_cogs = [
             "jishaku",
-            "cogs.image"
+            "cogs.image",
+            "cogs.misc"
         ]
 
         self.is_accepting_commands = False
