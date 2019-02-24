@@ -1,3 +1,4 @@
+import os
 import traceback
 
 import discord
@@ -47,6 +48,9 @@ class Bot(commands.Bot):
 
 
 if __name__ == "__main__":
+    # This will stop it from showing up in the help menu
+    os.environ['JISHAKU_HIDE'] = "true"
+
     with open("token.txt", "r") as f:
         token = f.read()
     Bot(command_prefix="bl ", status=discord.Status.dnd).run(token)
