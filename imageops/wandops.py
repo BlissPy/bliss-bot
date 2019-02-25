@@ -13,21 +13,7 @@ class AsciiColor(Color):
     """
 
     def __init__(self, *args, **kwargs):
-        self.ascii_characters = {
-            300: "@",
-            275: "#",
-            250: ";",
-            225: "+",
-            200: "=",
-            175: ":",
-            150: "-",
-            125: "\"",
-            100: ",",
-            75: "'",
-            50: ".",
-            25: " ",
-            0: " "
-        }
+
         super().__init__(*args, **kwargs)
 
     @property
@@ -223,25 +209,6 @@ def _lsd(img: Image):
     img.modulate(saturation=200, brightness=75)
 
     return img
-
-
-def _ascii_art(img: Image):
-    with img:
-        size = 300
-        img.sample(size, int(size / 2))
-
-        asciiart = ""
-
-        first_iter = True
-        for row in img:
-            if not first_iter:
-                asciiart += "\n"
-            first_iter = False
-            for col in row:
-                with AsciiColor(str(col)) as c:
-                    asciiart += c.ascii_character
-
-    return asciiart
 
 
 def _gay(img: Image):
