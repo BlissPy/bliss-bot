@@ -1,4 +1,12 @@
-# Things for use in hungergames.py server
+"""
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+
+License Location: https://github.com/Gelbpunkt/IdleRPG/tree/v3.4-dev#license
+Source Location: https://github.com/Gelbpunkt/IdleRPG/blob/v3.4-dev/cogs/hungergames.py
+"""
 
 import asyncio
 import copy
