@@ -6,23 +6,6 @@ from wand.image import Image
 from wand.color import Color
 
 
-class AsciiColor(Color):
-    """
-    A little subclass of wand.color.Color
-    Adds functionality for ascii art.
-    """
-
-    def __init__(self, *args, **kwargs):
-
-        super().__init__(*args, **kwargs)
-
-    @property
-    def ascii_character(self):
-        value = self.red + self.green + self.blue
-        value *= 100
-        return self.ascii_characters[int(math.ceil(value / 25.) * 25)]
-
-
 async def bytes_to_wand(img_bytes: BytesIO):
     return Image(blob=img_bytes.getvalue())
 

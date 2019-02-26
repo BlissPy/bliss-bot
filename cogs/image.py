@@ -1,5 +1,6 @@
 import io
 import typing
+import aiohttp
 
 import discord
 from discord.ext import commands
@@ -234,9 +235,16 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         async with ctx.typing():
             b = await self.avatar_bytes(member)
             art = await imageops.ascii_art(b)
-            async with self.session.post("https://wastebin.travitia.xyz/documents", data=art) as post:
-                key = (await post.json())["key"]
-            await ctx.send(f"{ctx.author.mention}, https://wastebin.travitia.xyz/{key}.txt")
+            try:
+                async with self.session.post("https://wastebin.travitia.xyz/documents", data=art) as post:
+                    key = (await post.json())["key"]
+                await ctx.send(f"{ctx.author.mention}, https://wastebin.travitia.xyz/{key}.txt")
+            except KeyError:
+                await ctx.send("Sorry. I was able to caclulate that image but it was too large for my text-host.")
+                return
+            except aiohttp.ContentTypeError:
+                await ctx.send("Sorry. I was able to caclulate that image but it was too large for my text-host.")
+                return
 
 
 def setup(bot):
