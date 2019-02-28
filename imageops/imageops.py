@@ -4,7 +4,7 @@ from io import BytesIO
 
 from .wandops import bytes_to_wand, wand_to_bytes, _magic, _emboss, _deepfry, _vaporwave, _floor, _concave, _convex, \
     _invert, _sat, _desat, _lsd, _posterize, _grayscale, _bend, _edge, _gay, _straight
-from .numpyops import bytes_to_np, np_to_bytes, _sort, _ascii_art
+from .numpyops import bytes_to_np, np_to_bytes, _sort, _ascii_art, _sobel, _frangi, _soangi
 
 loop = asyncio.get_event_loop()
 
@@ -129,7 +129,19 @@ async def sort(img_bytes: BytesIO):
     return await np_to_bytes(img)
 
 
-async def sketch(img_bytes: BytesIO):
+async def sobel(img_bytes: BytesIO):
     img = await bytes_to_np(img_bytes)
-    img = await run_in_executor(_sketch, img)
+    img = await run_in_executor(_sobel, img)
+    return await np_to_bytes(img)
+
+
+async def frangi(img_bytes: BytesIO):
+    img = await bytes_to_np(img_bytes)
+    img = await run_in_executor(_frangi, img)
+    return await np_to_bytes(img)
+
+
+async def soangi(img_bytes: BytesIO):
+    img = await bytes_to_np(img_bytes)
+    img = await run_in_executor(_soangi, img)
     return await np_to_bytes(img)

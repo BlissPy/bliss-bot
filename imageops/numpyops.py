@@ -4,10 +4,12 @@ from io import BytesIO
 import skimage
 import skimage.transform
 import numpy as np
-rom skimage import data
 from skimage.exposure import rescale_intensity
-from skimage.color.adapt_rgb import adapt_rgb, each_channel, hsv_value
-from PIL import Image
+from skimage.color.adapt_rgb import adapt_rgb, each_channel
+from skimage.color import rgb2gray
+import skimage.segmentation
+import skimage.filters
+import matplotlib.pyplot as plt
 from skimage import io
 
 
@@ -21,10 +23,8 @@ async def bytes_to_np(img_bytes: BytesIO):
 async def np_to_bytes(img_bytes: BytesIO):
     """This takes a np.ndarray containing an image and converts it to a BytesIO object
     containing an image."""
-    pil = Image.fromarray(img_bytes)
     b = BytesIO()
-    pil.save(b, format="png")
-    pil.close()
+    plt.imsave(b, img_bytes)
     b.seek(0)
     return b
 
@@ -32,10 +32,11 @@ async def np_to_bytes(img_bytes: BytesIO):
 def _sort(img: np.ndarray):
     shape = img.shape
     img = img.reshape((img.shape[0] * img.shape[1], img.shape[2]))
-    
+
     img.sort(0)
 
     return img.reshape(shape)
+
 
 # If you are seeing this and think that you can make
 # the selection of characters better, please do.
@@ -74,8 +75,23 @@ def _ascii_art(img: np.ndarray):
 
 @adapt_rgb(each_channel)
 def _sobel_each(image):
-    return filters.sobel(image)
+    return skimage.filters.sobel(image)
 
 
 def _sobel(img: np.ndarray):
-    return rescale_intensity(1 - _sobel_each(img))
+    return rescale_intensity(255 - _sobel_each(img) * 255)
+
+
+@adapt_rgb(each_channel)
+def _frangi_each(image):
+    return skimage.filters.frangi(image)
+
+
+def _frangi(img: np.ndarray):
+    return rescale_intensity(255 - _frangi_each(img) * 255)
+
+
+def _soangi(img: np.ndarray):
+    img = rgb2gray(img)
+    img = skimage.filters.sobel(img)
+    return skimage.filters.frangi(img)
