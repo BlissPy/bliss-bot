@@ -216,14 +216,36 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
         await ctx.send(content=ctx.author.mention, file=f)
 
-    @commands.command(name="sketch")
-    async def sketch(self, ctx, *, member: discord.Member = None):
+    @commands.command(name="sobel")
+    async def sobel(self, ctx, *, member: discord.Member = None):
         if member is None:
             member = ctx.author
 
         b = await self.avatar_bytes(member)
-        img = await imageops.sketch(b)
-        f = discord.File(img, filename="sketch.png")
+        img = await imageops.sobel(b)
+        f = discord.File(img, filename="sobel.png")
+
+        await ctx.send(content=ctx.author.mention, file=f)
+
+    @commands.command(name="frangi")
+    async def frangi(self, ctx, *, member: discord.Member = None):
+        if member is None:
+            member = ctx.author
+
+        b = await self.avatar_bytes(member)
+        img = await imageops.frangi(b)
+        f = discord.File(img, filename="frangi.png")
+
+        await ctx.send(content=ctx.author.mention, file=f)
+
+    @commands.command(name="neon", aliases=["soangi"])
+    async def soangi(self, ctx, *, member: discord.Member = None):
+        if member is None:
+            member = ctx.author
+
+        b = await self.avatar_bytes(member)
+        img = await imageops.soangi(b)
+        f = discord.File(img, filename="soangi.png")
 
         await ctx.send(content=ctx.author.mention, file=f)
 
