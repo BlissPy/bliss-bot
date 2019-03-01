@@ -133,15 +133,3 @@ async def sobel(img_bytes: BytesIO):
     img = await bytes_to_np(img_bytes)
     img = await run_in_executor(_sobel, img)
     return await np_to_bytes(img)
-
-
-async def frangi(img_bytes: BytesIO):
-    img = await bytes_to_np(img_bytes)
-    img = await run_in_executor(_frangi, img)
-    return await np_to_bytes(img)
-
-
-async def soangi(img_bytes: BytesIO):
-    img = await bytes_to_np(img_bytes)
-    img = await run_in_executor(_soangi, img)
-    return await np_to_bytes(img)
