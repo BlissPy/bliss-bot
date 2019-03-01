@@ -80,18 +80,3 @@ def _sobel_each(image):
 
 def _sobel(img: np.ndarray):
     return rescale_intensity(255 - _sobel_each(img) * 255)
-
-
-@adapt_rgb(each_channel)
-def _frangi_each(image):
-    return skimage.filters.frangi(image)
-
-
-def _frangi(img: np.ndarray):
-    return rescale_intensity(255 - _frangi_each(img) * 255)
-
-
-def _soangi(img: np.ndarray):
-    img = rgb2gray(img)
-    img = skimage.filters.sobel(img)
-    return skimage.filters.frangi(img)
