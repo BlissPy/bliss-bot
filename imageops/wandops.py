@@ -25,14 +25,14 @@ async def wand_to_bytes(img: Image):
 
 def _magic(img: Image):
     img.liquid_rescale(
-        width=int(img.width * 0.5),
-        height=int(img.height * 0.5),
+        width=int(img.width * 0.4),
+        height=int(img.height * 0.4),
         delta_x=1,
         rigidity=0
     )
     img.liquid_rescale(
-        width=int(img.width * 1.5),
-        height=int(img.height * 1.5),
+        width=int(img.width * 1.6),
+        height=int(img.height * 1.6),
         delta_x=2,
         rigidity=0
     )
@@ -201,13 +201,4 @@ def _gay(img: Image):
         gay.transparentize(.50)
         gay.sample(img.width, img.height)
         img.composite(gay, 0, 0)
-    return img
-
-
-def _straight(img: Image):
-    with Image(filename=f"{os.path.dirname(os.path.realpath(__file__))}\\image_assets\\straight.png") as straight:
-        img.resize(640, 440)
-        straight.composite(img, left=0, top=157)
-        img = straight.clone()
-
     return img

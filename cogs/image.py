@@ -20,6 +20,7 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     @commands.command(name="magic")
     async def magic(self, ctx, *, member: discord.Member = None):
+        """Content aware scale this to another planet."""
         if member is None:
             member = ctx.author
 
@@ -27,10 +28,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.magic(b)
         f = discord.File(img, filename="magic.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="deepfry")
     async def deepfry(self, ctx, *, member: discord.Member = None):
+        """Deepfry a member's avatar. It still needs more jpeg though."""
         if member is None:
             member = ctx.author
 
@@ -38,10 +47,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.deepfry(b)
         f = discord.File(img, filename="deepfry.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="emboss")
     async def emboss(self, ctx, *, member: discord.Member = None):
+        """Emboss a member's avatar."""
         if member is None:
             member = ctx.author
 
@@ -49,10 +66,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.emboss(b)
         f = discord.File(img, filename="emboss.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="vaporwave")
     async def vaporwave(self, ctx, *, member: discord.Member = None):
+        """make that shiiit vaporwaveee"""
         if member is None:
             member = ctx.author
 
@@ -60,10 +85,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.vaporwave(b)
         f = discord.File(img, filename="vaporwave.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="floor")
     async def floor(self, ctx, *, member: discord.Member = None):
+        """The floor is lava. Lava is a member's avatar."""
         if member is None:
             member = ctx.author
 
@@ -71,10 +104,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.floor(b)
         f = discord.File(img, filename="floor.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="concave")
     async def concave(self, ctx, *, member: discord.Member = None):
+        """Return a member's avatar through a concave lens."""
         if member is None:
             member = ctx.author
 
@@ -82,10 +123,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.concave(b)
         f = discord.File(img, filename="concave.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="convex")
     async def convex(self, ctx, *, member: discord.Member = None):
+        """Return a member's avatar through a convex lens."""
         if member is None:
             member = ctx.author
 
@@ -93,10 +142,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.convex(b)
         f = discord.File(img, filename="convex.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="invert")
     async def invert(self, ctx, *, member: discord.Member = None):
+        """Invert a member's avatar."""
         if member is None:
             member = ctx.author
 
@@ -104,10 +161,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.invert(b)
         f = discord.File(img, filename="invert.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="desat")
     async def desat(self, ctx, member: typing.Union[discord.Member] = None, threshold: int = 1):
+        """Desaturate a member's avatar"""
         if member is None:
             member = ctx.author
 
@@ -115,10 +180,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.desat(b, threshold)
         f = discord.File(img, filename="desat.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="sat")
     async def sat(self, ctx, member: typing.Union[discord.Member] = None, threshold: int = 1):
+        """Saturate a member's avatar."""
         if member is None:
             member = ctx.author
 
@@ -126,10 +199,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.sat(b, threshold)
         f = discord.File(img, filename="sat.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="lsd")
     async def lsd(self, ctx, *, member: discord.Member = None):
+        """dO sUm lsDADDY"""
         if member is None:
             member = ctx.author
 
@@ -137,10 +218,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.lsd(b)
         f = discord.File(img, filename="lsd.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="posterize")
     async def posterize(self, ctx, *, member: discord.Member = None):
+        """Posterize a member's avatar."""
         if member is None:
             member = ctx.author
 
@@ -148,10 +237,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.posterize(b)
         f = discord.File(img, filename="posterize.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
 
-    @commands.command(name="grayscale")
+        await ctx.send(embed=embed, file=f)
+
+    @commands.command(name="grayscale", aliases=["greyscale"])
     async def grayscale(self, ctx, *, member: discord.Member = None):
+        """Make a member's avatar grayscale."""
         if member is None:
             member = ctx.author
 
@@ -159,10 +256,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.grayscale(b)
         f = discord.File(img, filename="grayscale.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="bend")
     async def bend(self, ctx, *, member: discord.Member = None):
+        """Bend a member's avatar."""
         if member is None:
             member = ctx.author
 
@@ -170,10 +275,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.bend(b)
         f = discord.File(img, filename="bend.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="edge")
     async def edge(self, ctx, *, member: discord.Member = None):
+        """Sharpen a member's avatar."""
         if member is None:
             member = ctx.author
 
@@ -181,10 +294,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.edge(b)
         f = discord.File(img, filename="edge.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="gay")
     async def gay(self, ctx, *, member: discord.Member = None):
+        """Make someone gay. Keep this power out of the wrong hands."""
         if member is None:
             member = ctx.author
 
@@ -192,10 +313,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.gay(b)
         f = discord.File(img, filename="gay.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="sort")
     async def sort(self, ctx, *, member: discord.Member = None):
+        """Sort the pixels of a member's avatar. Makes a pretty gradient most of the time."""
         if member is None:
             member = ctx.author
 
@@ -203,21 +332,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.sort(b)
         f = discord.File(img, filename="sort.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
 
-    @commands.command(name="straight")
-    async def straight(self, ctx, *, member: discord.Member = None):
-        if member is None:
-            member = ctx.author
-
-        b = await self.avatar_bytes(member)
-        img = await imageops.straight(b)
-        f = discord.File(img, filename="straight.png")
-
-        await ctx.send(content=ctx.author.mention, file=f)
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="sobel")
     async def sobel(self, ctx, *, member: discord.Member = None):
+        """Sobel filter a member's avatar."""
         if member is None:
             member = ctx.author
 
@@ -225,10 +351,18 @@ class Imaging(commands.Cog, name="Image Manipulation"):
         img = await imageops.sobel(b)
         f = discord.File(img, filename="sobel.png")
 
-        await ctx.send(content=ctx.author.mention, file=f)
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
 
     @commands.command(name="ascii")
     async def ascii_art(self, ctx, *, member: discord.Member = None):
+        """Make ascii-art out of a member's avatar."""
         if member is None:
             member = ctx.author
 

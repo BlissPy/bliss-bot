@@ -117,12 +117,6 @@ async def gay(img_bytes: BytesIO):
     return await wand_to_bytes(img)
 
 
-async def straight(img_bytes: BytesIO):
-    img = await bytes_to_wand(img_bytes)
-    img = await run_in_executor(_straight, img)
-    return await wand_to_bytes(img)
-
-
 async def sort(img_bytes: BytesIO):
     img = await bytes_to_np(img_bytes)
     img = await run_in_executor(_sort, img)

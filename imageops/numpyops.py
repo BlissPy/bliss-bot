@@ -1,4 +1,3 @@
-
 from io import BytesIO
 
 import skimage
@@ -6,7 +5,6 @@ import skimage.transform
 import numpy as np
 from skimage.exposure import rescale_intensity
 from skimage.color.adapt_rgb import adapt_rgb, each_channel
-from skimage.color import rgb2gray
 import skimage.segmentation
 import skimage.filters
 import matplotlib.pyplot as plt
