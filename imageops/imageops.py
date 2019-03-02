@@ -4,7 +4,7 @@ from io import BytesIO
 
 from .wandops import bytes_to_wand, wand_to_bytes, _magic, _emboss, _deepfry, _vaporwave, _floor, _concave, _convex, \
     _invert, _sat, _desat, _lsd, _posterize, _grayscale, _bend, _edge, _gay, _straight
-from .numpyops import bytes_to_np, np_to_bytes, _sort, _ascii_art, _sobel, _frangi, _soangi
+from .numpyops import bytes_to_np, np_to_bytes, _sort, _ascii_art, _sobel
 
 loop = asyncio.get_event_loop()
 

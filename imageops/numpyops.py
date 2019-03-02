@@ -66,7 +66,7 @@ def _ascii_art(img: np.ndarray):
         row = img[i_row]
         ascii_art += "\n"
         for col in row:
-            avg = int(col[0] + col[1] + col[2])
+            avg = int(col[0]) + int(col[1]) + int(col[2])
             avg = int(avg / 3)
             ascii_art += _ascii_characters[int(avg / 5)]
 

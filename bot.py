@@ -16,7 +16,8 @@ class Bot(commands.Bot):
         self.initial_cogs = [
             "jishaku",
             "cogs.image",
-            "cogs.misc"
+            "cogs.misc",
+            "cogs.errorhandler"
         ]
 
         self.is_accepting_commands = False
