@@ -25,10 +25,6 @@ class CommandError:
 			"unknown": {"title": "Error", "description": "An error occurred, that is all I know", "reset": True}
 		}
 
-	@staticmethod
-	def humanize_cooldown(cooldown):
-		return humanize.naturaltime(datetime.datetime.now() + cooldown.retry_after)
-
 	@property
 	def reset_cooldown(self):
 		return self.messages[type(self.exception)]["retry"]
