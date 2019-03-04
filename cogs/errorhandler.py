@@ -11,6 +11,7 @@ class CommandError:
 
 	def __init__(self, exception):
 		self.exception = exception
+		self.raise = False
 
 		self.ignored = (
 			commands.CommandNotFound,
@@ -35,6 +36,7 @@ class CommandError:
 		if type(self.exception) in self.messages:
 			return self.messages[type(self.exception)]
 		else:	
+			self.raise = True
 			return self.messages["unknown"]
 	
 	@property
@@ -65,6 +67,9 @@ class ErrorHandler(commands.Cog, name="Error Handler", command_attrs=dict(hidden
 			await ctx.command.reset_cooldown(ctx)
 		
 		await error.send_to(ctx)
+		
+		if self.raise:
+			raise exception
 
 
 def setup(bot):
