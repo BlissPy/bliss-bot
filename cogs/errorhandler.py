@@ -5,6 +5,7 @@ import discord
 from discord.ext import commands
 import humanize
 
+from utils import formatting
 
 class CommandError:
 
@@ -20,7 +21,7 @@ class CommandError:
 			commands.BadArgument: {"title": "Bad Argument", "description": "You passed a bad argument. If you are having trouble, refer to the help documentation for the command.", "reset": True},
 			commands.BadUnionArgument: {"title": "Bad Or Missing Argument", "description": "You passed a bad argument or forgot an argument. If you are having trouble, refer to the help documentation for the command.", "reset": True},
 			commands.UserInputError: {"title": "Input Error", "description": "Your input was invalid. If you are having trouble, refer to the help documentation for the command.", "reset": True},
-			commands.CommandOnCooldown: {"title": "Command On Cooldown", "description": "That command is currently on a cooldown, **you can try again in {self.humanize_cooldown(0.cooldown)}**.", "reset": False},
+			commands.CommandOnCooldown: {"title": "Command On Cooldown", "description": "That command is currently on a cooldown, **you can try again in {formatting.humanize_command_cooldown(0.cooldown)}**.", "reset": False},
 			commands.MissingPermissions: {"title": "Missing Permissions", "description": "You are missing {0.missing_perms} which is/are required for this command."}, "reset": True,
 			"unknown": {"title": "Error", "description": "An error occurred, that is all I know", "reset": True}
 		}
