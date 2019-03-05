@@ -1,77 +1,76 @@
 import datetime
-import traceback
+import typing
 
 import discord
 from discord.ext import commands
 import humanize
 
+from utils import formatting
 
 class CommandError:
 
-    def __init__(self, ctx, exception):
-        self.ctx = ctx
-        self.exception = exception
+	def __init__(self, exception):
+		self.exception = exception
+		self.raise = False
 
-        self.ignored = (
-            commands.CommandNotFound,
-        )
+		self.ignored = (
+			commands.CommandNotFound,
+		)
+		
+		self.messages = {
+			commands.MissingRequiredArgument: {"title": "Missing Argument", "description": "You are missing the required argument {0.param.name}. Please enter that parameter and try again.", "reset": True},
+			commands.BadArgument: {"title": "Bad Argument", "description": "You passed a bad argument. If you are having trouble, refer to the help documentation for the command.", "reset": True},
+			commands.BadUnionArgument: {"title": "Bad Or Missing Argument", "description": "You passed a bad argument or forgot an argument. If you are having trouble, refer to the help documentation for the command.", "reset": True},
+			commands.UserInputError: {"title": "Input Error", "description": "Your input was invalid. If you are having trouble, refer to the help documentation for the command.", "reset": True},
+			commands.CommandOnCooldown: {"title": "Command On Cooldown", "description": "That command is currently on a cooldown, **you can try again in {formatting.humanize_command_cooldown(0.cooldown)}**.", "reset": False},
+			commands.MissingPermissions: {"title": "Missing Permissions", "description": "You are missing {0.missing_perms} which is/are required for this command."}, "reset": True,
+			"unknown": {"title": "Error", "description": "An error occurred, that is all I know", "reset": True}
+		}
 
-        self.messages = {
-            commands.MissingRequiredArgument: {"title": "Missing Argument", "description": "You are missing the required argument {0.param.name}. Please enter that parameter and try again."},
-            commands.BadArgument: {"title": "Bad Argument", "description": "{0}. If you are having trouble, refer to the help documentation for the command."},
-            commands.BadUnionArgument: {"title": "Bad Argument", "description": "{0} If you are having trouble, refer to the help documentation for the command."},
-            commands.UserInputError: {"title": "Input Error", "description": "Your input was invalid. If you are having trouble, refer to the help documentation for the command."},
-            commands.CommandOnCooldown: {"title": "Command On Cooldown", "description": "That command is currently on a cooldown, **you can try again in {self.humanize_cooldown(0.cooldown)}**."},
-            commands.MissingPermissions: {"title": "Missing Permissions", "description": "You are missing {0.missing_perms} which is/are required for this command."},
-            commands.NotOwner: {"title": "Owner Only", "description": "You must be the owner of this bot to use this command."},
-            commands.BotMissingPermissions: {"title": "I Am Missing Permissions", "description": "I am missing {0.missing_perms} which is/are required for this command."},
-            "unknown": {"title": "Error", "description": "An error occurred, that is all I know"}
-        }
+	@property
+	def reset_cooldown(self):
+		return self.messages[type(self.exception)]["retry"]
+	
+	@property
+	def _message(self):
+		if type(self.exception) in self.messages:
+			return self.messages[type(self.exception)]
+		else:	
+			self.raise = True
+			return self.messages["unknown"]
+	
+	@property
+	def ignored(self):
+		return type(self.exception) in self.ignored
+	
+	@property
+	def embed(self):
+		return discord.Embed(title=self._message["title"], description=self._message["description"].format(self.exception), color=discord.Color.red())
 
-    @staticmethod
-    def humanize_cooldown(cooldown):
-        return humanize.naturaltime(datetime.datetime.now() + cooldown.retry_after)
-
-    @property
-    def embed(self):
-        if type(self.exception) in self.ignored:
-            self.ctx.command.reset_cooldown(self.ctx)
-            return
-
-        if type(self.exception) in self.messages:
-            message = self.messages[type(self.exception)]
-            self.ctx.command.reset_cooldown(self.ctx)
-            return discord.Embed(
-                title=message["title"],
-                description=message["description"].format(self.exception),
-                color=discord.Color.red()
-            )
-
-        message = self.messages["unknown"]
-        self.ctx.command.reset_cooldown(self.ctx)
-
-        traceback.print_exc()
-
-        return discord.Embed(
-            title=message["title"],
-            description=message["description"],
-            color=discord.Color.red()
-        )
-
-    async def send_to(self, context):
-        await context.send(embed=self.embed)
+	async def send_to(self, channel: typing.Union[commands.Context, discord.TextChannel]):
+		await channel.send(embed=self.embed)
 
 
 class ErrorHandler(commands.Cog, name="Error Handler", command_attrs=dict(hidden=True, checks=[commands.is_owner])):
 
-    def __init__(self, bot: commands.Bot):
-        self.bot = bot
+	def __init__(self, bot: commands.Bot):
+		self.bot = bot
 
-    @commands.Cog.listener()
-    async def on_command_error(self, ctx, exception):
-        error = CommandError(ctx, exception)
-        await error.send_to(ctx)
+	@commands.Cog.listener()
+	async def on_command_error(self, ctx, exception):
+		error = CommandError(exception)
+		
+		if error.ignored:
+			return
+		
+		if error.reset_cooldown:
+			await ctx.command.reset_cooldown(ctx)
+		
+		await error.send_to(ctx)
+		
+		if self.raise:
+			raise exception
 
 
 def setup(bot):
-    bot.add_cog(ErrorHandler(bot))
+	bot.add_cog(ErrorHandler(bot))
