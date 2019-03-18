@@ -9,9 +9,11 @@ from utils import formatting
 
 class CommandError:
 
-	def __init__(self, exception):
+	def __init__(self, exception, ctx):
 		self.exception = exception
 		self.raise = False
+        
+        self.ctx = ctx
 
 		self.ignored = (
 			commands.CommandNotFound,
@@ -28,8 +30,8 @@ class CommandError:
 		}
 
 	@property
-	def reset_cooldown(self):
-		return self.messages[type(self.exception)]["retry"]
+	def should_reset_cooldown(self):
+		return self.messages[type(self.exception)]["reset"]
 	
 	@property
 	def _message(self):
@@ -49,6 +51,9 @@ class CommandError:
 
 	async def send_to(self, channel: typing.Union[commands.Context, discord.TextChannel]):
 		await channel.send(embed=self.embed)
+        
+    async def reset_cooldown(self):
+        await self.ctx.command.reset_cooldown(self.ctx)
 
 
 class ErrorHandler(commands.Cog, name="Error Handler", command_attrs=dict(hidden=True, checks=[commands.is_owner])):
@@ -58,13 +63,16 @@ class ErrorHandler(commands.Cog, name="Error Handler", command_attrs=dict(hidden
 
 	@commands.Cog.listener()
 	async def on_command_error(self, ctx, exception):
-		error = CommandError(exception)
+		error = CommandError(exception, ctx)
 		
 		if error.ignored:
 			return
 		
-		if error.reset_cooldown:
-			await ctx.command.reset_cooldown(ctx)
+		if error.should_reset_cooldown:
+			try:
+			    await error.reset_cooldown()
+            except:
+                pass
 		
 		await error.send_to(ctx)
 		
