@@ -6,21 +6,33 @@ from discord.ext import commands
 
 
 # noinspection PyBroadException
-class Bot(commands.Bot):
+class Bot(commands.AutoShardedBot):
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super().__init__(command_prefix=self.prefix, *args, **kwargs)
 
-        self.color = discord.Color.from_rgb(254, 202, 87)
-        self.owners = [217462890364403712]
+        self.color = discord.Color.from_rgb(
+            254, 202, 87
+        )
+        self.owners = [
+            217462890364403712
+        ]
         self.initial_cogs = [
             "jishaku",
             "cogs.image",
             "cogs.misc",
             "cogs.errorhandler"
         ]
+        self.prefixes = [
+            "bl ",
+            ":bangbang:"
+        ]
 
         self.is_accepting_commands = False
+
+    @staticmethod
+    async def prefix(bot, message):
+        return commands.when_mentioned_or(*bot.prefixes)(bot, message)
 
     async def on_ready(self):
         print("Initiated.")
@@ -54,4 +66,4 @@ if __name__ == "__main__":
 
     with open("token.txt", "r") as f:
         token = f.read()
-    Bot(command_prefix="bl ", status=discord.Status.dnd).run(token)
+    Bot(status=discord.Status.dnd).run(token)

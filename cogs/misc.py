@@ -36,9 +36,7 @@ class Miscellaneous(commands.Cog):
 
     @commands.command(name="ping", aliases=['ms'])
     async def _ping_command(self, ctx):
-        """
-        Return the bot's current ping.
-        """
+        """Return the bot's current ping."""
         ws = round(ctx.bot.latency * 1000, 2)
         a = time.perf_counter()
         msg = await ctx.send(".")
@@ -83,27 +81,43 @@ class Miscellaneous(commands.Cog):
 
     @commands.group()
     async def raw(self, ctx):
+        """Return a channel, message, or member as a dict."""
         if ctx.invoked_subcommand is None:
             raise commands.BadArgument("You forgot to supply a subcommand")
 
     @raw.command(aliases=["msg"])
     async def message(self, ctx, message_id: int):
-        message = await ctx.channel.get_message(message_id)
+        """Return a message as a dict."""
+        message = await ctx.channel.fetch_message(message_id)
         if message is None:
             raise commands.BadArgument("Message with that ID was not found. It must be in this channel")
 
         raw = await ctx.bot.http.get_message(message.channel.id, message.id)
 
-        await ctx.send("```json\n{}```".format(self._escape_codeblocks(self._format_json(raw))))
+        try:
+            await ctx.send("```json\n{}```".format(self._escape_codeblocks(self._format_json(raw))))
+        except discord.HTTPException:
+            raw_string = "```json\n{}```".format(self._escape_codeblocks(self._format_json(raw)))
+            half = int(len(raw_string) / 2)
+            raw_string = [raw_string[0:half] + "```", "```json\n" + raw_string[half:len(raw_string)]]
+            await ctx.send(raw_string[0])
+            await ctx.send(raw_string[1])
 
     @raw.command(aliases=["user"])
-    async def member(self, ctx, user: discord.User):
-        raw = await ctx.bot.http.get_user_info(user.id)
+    async def member(self, ctx, user: discord.User = None):
+        """Return a member as a dict."""
+        if user is None:
+            user = ctx.author
+
+        route = discord.http.Route("GET", f"/users/{user.id}")
+        raw = await ctx.bot.http.request(route)
+
         await ctx.send("```json\n{}```".format(self._escape_codeblocks(self._format_json(raw))))
 
     @raw.command()
     async def channel(self, ctx,
                       channel: typing.Union[discord.TextChannel, discord.VoiceChannel, discord.CategoryChannel] = None):
+        """Return a channel as a dict."""
         if channel is None:
             channel = ctx.channel
 

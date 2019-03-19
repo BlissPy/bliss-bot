@@ -12,7 +12,11 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     def __init__(self, bot):
         self.bot = bot
-        self.session = self.bot.http._session
+        self.session = bot.loop.create_task(self.create_session())
+
+    @staticmethod
+    async def create_session():
+        return aiohttp.ClientSession()
 
     async def avatar_bytes(self, member: discord.Member):
         async with self.session.get(member.avatar_url_as(format="png")) as get:
@@ -20,7 +24,7 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     @commands.command(name="magic")
     async def magic(self, ctx, *, member: discord.Member = None):
-        """Content aware scale this to another planet."""
+        """Content aware scale a member's avatar into another planet."""
         if member is None:
             member = ctx.author
 
@@ -39,7 +43,7 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     @commands.command(name="deepfry")
     async def deepfry(self, ctx, *, member: discord.Member = None):
-        """Deepfry a member's avatar. It still needs more jpeg though."""
+        """Deepfry a member's avatar. It still needs more jpeg."""
         if member is None:
             member = ctx.author
 
@@ -58,7 +62,7 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     @commands.command(name="emboss")
     async def emboss(self, ctx, *, member: discord.Member = None):
-        """Emboss a member's avatar."""
+        """Emboss a member's avatar,"""
         if member is None:
             member = ctx.author
 
@@ -77,7 +81,7 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     @commands.command(name="vaporwave")
     async def vaporwave(self, ctx, *, member: discord.Member = None):
-        """make that shiiit vaporwaveee"""
+        """vvvaaapppooorrrwwwaaavvveee"""
         if member is None:
             member = ctx.author
 
@@ -96,7 +100,7 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     @commands.command(name="floor")
     async def floor(self, ctx, *, member: discord.Member = None):
-        """The floor is lava. Lava is a member's avatar."""
+        """The floor is lava and the lava is a member's avatar."""
         if member is None:
             member = ctx.author
 
@@ -115,7 +119,7 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     @commands.command(name="concave")
     async def concave(self, ctx, *, member: discord.Member = None):
-        """Return a member's avatar through a concave lens."""
+        """View a member's avatar through a concave lens."""
         if member is None:
             member = ctx.author
 
@@ -134,7 +138,7 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     @commands.command(name="convex")
     async def convex(self, ctx, *, member: discord.Member = None):
-        """Return a member's avatar through a convex lens."""
+        """View a member's avatar through a convex lens."""
         if member is None:
             member = ctx.author
 
@@ -172,7 +176,7 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     @commands.command(name="desat")
     async def desat(self, ctx, member: typing.Union[discord.Member] = None, threshold: int = 1):
-        """Desaturate a member's avatar"""
+        """Desaturate a member's avatar."""
         if member is None:
             member = ctx.author
 
@@ -210,7 +214,7 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     @commands.command(name="lsd")
     async def lsd(self, ctx, *, member: discord.Member = None):
-        """dO sUm lsDADDY"""
+        """Take some LSD and look at a member's avatar."""
         if member is None:
             member = ctx.author
 
@@ -229,7 +233,7 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     @commands.command(name="posterize")
     async def posterize(self, ctx, *, member: discord.Member = None):
-        """Posterize a member's avatar."""
+        """Posterize a member's avatar,"""
         if member is None:
             member = ctx.author
 
@@ -248,7 +252,7 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     @commands.command(name="grayscale", aliases=["greyscale"])
     async def grayscale(self, ctx, *, member: discord.Member = None):
-        """Make a member's avatar grayscale."""
+        """Grayscale a member's avatar."""
         if member is None:
             member = ctx.author
 
@@ -286,7 +290,7 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     @commands.command(name="edge")
     async def edge(self, ctx, *, member: discord.Member = None):
-        """Sharpen a member's avatar."""
+        """Make a member's avatar sharp and edgy."""
         if member is None:
             member = ctx.author
 
@@ -305,7 +309,7 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     @commands.command(name="gay")
     async def gay(self, ctx, *, member: discord.Member = None):
-        """Make someone gay. Keep this power out of the wrong hands."""
+        """Make someone gay. Use at your own discretion."""
         if member is None:
             member = ctx.author
 
