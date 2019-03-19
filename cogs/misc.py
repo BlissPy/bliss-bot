@@ -126,6 +126,10 @@ class Miscellaneous(commands.Cog):
 
         await ctx.send("```json\n{}```".format(self._escape_codeblocks(self._format_json(raw))))
 
+    @commands.command()
+    async def source(self, ctx):
+        await ctx.send("You can find my source at **<https://github.com/ir-3/bliss>**.")
+
 
 def setup(bot):
     bot.add_cog(Miscellaneous())
