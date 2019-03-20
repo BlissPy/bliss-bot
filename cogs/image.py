@@ -12,11 +12,11 @@ class Imaging(commands.Cog, name="Image Manipulation"):
 
     def __init__(self, bot):
         self.bot = bot
-        self.session = bot.loop.create_task(self.create_session())
+        self.session = None
+        bot.loop.create_task(self.create_session())
 
-    @staticmethod
-    async def create_session():
-        return aiohttp.ClientSession()
+    async def create_session(self):
+        self.session = aiohttp.ClientSession()
 
     async def avatar_bytes(self, member: discord.Member):
         async with self.session.get(member.avatar_url_as(format="png")) as get:

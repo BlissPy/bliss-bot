@@ -47,7 +47,8 @@ class Bot(commands.AutoShardedBot):
     async def on_message(self, message):
         if not self.is_accepting_commands:
             return
-
+        if message.author.bot:
+            return
         await self.process_commands(message)
 
     def run(self, *args, **kwargs):
