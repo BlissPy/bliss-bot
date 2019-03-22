@@ -128,6 +128,7 @@ class Miscellaneous(commands.Cog):
 
     @commands.command()
     async def source(self, ctx):
+        """Send you the link to the bot's source."""
         await ctx.send("You can find my source at **<https://github.com/ir-3/bliss>**.")
 
 

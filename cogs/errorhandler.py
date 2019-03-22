@@ -18,6 +18,9 @@ class CommandError:
         self.exception = exception
         self.ctx = ctx
 
+        if isinstance(exception, commands.CommandOnCooldown):
+            exception.formatted_cooldown = formatting.humanize_command_cooldown(exception)
+
         self.messages = {
             commands.MissingRequiredArgument: {"title": "Missing Argument",
                                                "description": "You are missing the required argument {0.param.name}. Please enter that parameter and try again.",
@@ -35,7 +38,7 @@ class CommandError:
                                       "description": "Your input was invalid. If you are having trouble, refer to the help documentation for the command.",
                                       "reset": True},
             commands.CommandOnCooldown: {"title": "Command On Cooldown",
-                                         "description": "That command is currently on a cooldown, **you can try again in {formatting.humanize_command_cooldown(0.cooldown)}**.",
+                                         "description": "That command is currently on a cooldown, **you can try again in {0.formatted_cooldown}**.",
                                          "reset": False},
             commands.MissingPermissions: {"title": "Missing Permissions",
                                           "description": "You are missing {0.missing_perms} which is/are required for this command.",
@@ -57,7 +60,7 @@ class CommandError:
         return discord.Embed(title=self.message["title"], description=self.message["description"].format(self.exception),
                              color=discord.Color.red())
 
-    async def send_to(self, channel: typing.Union[commands.Context, discord.TextChannel]):
+    async def send_to(self, channel: discord.abc.Messageable):
         await channel.send(embed=self.embed)
 
     async def reset_cooldown(self):
@@ -79,7 +82,10 @@ class ErrorHandler(commands.Cog, name="Error Handler", command_attrs=dict(hidden
         error = CommandError(exception, ctx)
 
         await error.reset_cooldown()
-        await error.send_to(ctx)
+        try:
+            await error.send_to(ctx)
+        except discord.Forbidden:
+            await error.send_to(ctx.author)
 
         if isinstance(exception, commands.CommandInvokeError):
             raise exception.original

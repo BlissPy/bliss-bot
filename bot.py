@@ -10,6 +10,7 @@ class Bot(commands.AutoShardedBot):
 
     def __init__(self, *args, **kwargs):
         super().__init__(command_prefix=self.prefix, *args, **kwargs)
+        self.db = None
 
         self.color = discord.Color.from_rgb(
             254, 202, 87
@@ -21,17 +22,24 @@ class Bot(commands.AutoShardedBot):
             "jishaku",
             "cogs.image",
             "cogs.misc",
-            "cogs.errorhandler"
+            "cogs.errorhandler",
+            "cogs.database",
+            "cogs.prefix"
         ]
         self.prefixes = [
             "bl ",
             ":bangbang:"
         ]
+        self.db_credentials = {
+            "host": "127.0.0.1",
+            "password": "zanebot",
+            "database": "zanebase",
+            "user": "zane"
+        }
 
         self.is_accepting_commands = False
 
-    @staticmethod
-    async def prefix(bot, message):
+    async def prefix(self, bot, message):
         return commands.when_mentioned_or(*bot.prefixes)(bot, message)
 
     async def on_ready(self):

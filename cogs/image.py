@@ -8,11 +8,13 @@ from discord.ext import commands
 import imageops
 
 
-class Imaging(commands.Cog, name="Image Manipulation"):
+class Imaging(commands.Cog, name="Image Manipulation",
+              command_attrs=dict(cooldown=commands.Cooldown(1, 3, commands.BucketType.member))):
 
     def __init__(self, bot):
         self.bot = bot
         self.session = None
+
         bot.loop.create_task(self.create_session())
 
     async def create_session(self):
