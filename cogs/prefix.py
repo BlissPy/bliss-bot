@@ -9,10 +9,10 @@ class Prefix(commands.Cog):
         self.bot = bot
         self.prefixes = {}
         self.bot.loop.create_task(self.setup_prefixes())
-        bot.prefix = self.get_prefix()
+        bot.prefix = self.get_prefix
 
     async def get_prefix(self, bot, message):
-        return commands.when_mentioned_or(*self.prefixes[message.guild])(bot, message)
+        return commands.when_mentioned_or(self.prefixes[message.guild])(bot, message)
 
     async def setup_prefixes(self):
         await self.bot.wait_until_ready()
@@ -26,7 +26,7 @@ class Prefix(commands.Cog):
     async def cog_unload(self):
         for guild in self.bot.guilds:
             p = self.prefixes.get(guild.id, ["bl "])
-            await self.bot.db.execut("INSERT INTO prefixes VALUES ($1);", p)
+            await self.bot.db.execute("INSERT INTO prefixes VALUES ($1);", p)
 
     @commands.Cog.listener("on_guild_join")
     async def add_new_guild(self, guild):
@@ -50,6 +50,7 @@ class Prefix(commands.Cog):
             raise commands.BadArgument("Your prefix must be less than 32 characters.")
 
         self.prefixes[ctx.guild.id].append(prefix)
+        await self.bot.db.execute("DELETE ")
 
         embed = discord.Embed(
             title=f"Prefix Added To{ctx.guild.name}",
@@ -57,6 +58,13 @@ class Prefix(commands.Cog):
             color=self.bot.color
         )
         await ctx.send(embed=embed)
+
+    @prefix.command()
+    @commands.has_permissions(manage_server=True)
+    async def remove(self, ctx, prefix: str):
+        guild_prefixes = self.prefixes[ctx.guild.id]
+        prefix = guild_prefixes.pop(guild_prefixes.index(prefix))
+
 
 
 

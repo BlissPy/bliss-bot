@@ -4,7 +4,7 @@ import asyncpg
 from discord.ext import commands
 
 
-class Database(commands.Cog, command_attrs=dict(checks=commands.is_owner)):
+class Database(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -21,6 +21,7 @@ class Database(commands.Cog, command_attrs=dict(checks=commands.is_owner)):
         self.bot.db = db
 
     @commands.command()
+    @commands.is_owner()
     async def execute(self, ctx, *, sql: str):
         await ctx.send("```\n" + await self.db.execute(sql) + "```")
 
