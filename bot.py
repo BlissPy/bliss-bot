@@ -40,7 +40,10 @@ class Bot(commands.AutoShardedBot):
         self.is_accepting_commands = False
 
     async def prefix(self, bot, message):
-        return commands.when_mentioned_or(*bot.prefixes)(bot, message)
+        try:
+            return await self.cogs["Prefix"].get_prefix(bot, message)
+        except KeyError:
+            return commands.when_mentioned_or(*bot.prefixes)(bot, message)
 
     async def on_ready(self):
         print("Initiated.")
