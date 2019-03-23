@@ -104,7 +104,7 @@ def _floor(img: Image):
     x, y = img.size
 
     img.alpha_channel = False
-    img.background_color = Color("light-blue")
+    img.background_color = Color("#81cfe0")
     img.virtual_pixel = "tile"
 
     img.distort(
