@@ -31,7 +31,7 @@ prefix VARCHAR(32)[] NOT NULL
 );""")
         for guild in self.bot.guilds:
             p = self.prefixes.get(guild.id, ["bl "])
-            await self.bot.db.execute("INSERT INTO prefixes VALUES ($1);", p)
+            await self.bot.db.execute(f"INSERT INTO prefixes VALUES ({guild.id}, $1);", p)
 
     @commands.Cog.listener("on_guild_join")
     async def add_new_guild(self, guild):
@@ -69,7 +69,13 @@ prefix VARCHAR(32)[] NOT NULL
         guild_prefixes = self.prefixes[ctx.guild.id]
         prefix = guild_prefixes.pop(guild_prefixes.index(prefix))
 
-        await self.bot.db.execute("DELETE ")
+        embed = discord.Embed(
+            title="Prefix Removed",
+            description=f"You can no longer use `{prefix}` to call me.",
+            color=self.bot.color
+        )
+
+        await ctx.send(embed=embed)
 
 
 def setup(bot):
