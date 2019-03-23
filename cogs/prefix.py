@@ -12,7 +12,7 @@ class Prefix(commands.Cog):
         bot.prefix = self.get_prefix
 
     async def get_prefix(self, bot, message):
-        return commands.when_mentioned_or(self.prefixes[message.guild])(bot, message)
+        return commands.when_mentioned_or(*self.prefixes[message.guild.id])(bot, message)
 
     async def setup_prefixes(self):
         await self.bot.wait_until_ready()
