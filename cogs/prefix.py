@@ -21,7 +21,7 @@ class Prefix(commands.Cog):
                 self.prefixes.setdefault(guild.id, ["bl "])
 
             for guild_id, prefixes in await self.bot.db.fetch("SELECT * FROM prefixes;"):
-                self.prefixes[guild_id].append(prefixes)
+                self.prefixes[guild_id].append("test")
 
     async def export_to_db(self):
         await self.bot.db.execute("DROP TABLE prefixes;")
