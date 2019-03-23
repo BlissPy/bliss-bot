@@ -23,7 +23,10 @@ class Prefix(commands.Cog):
             for guild_id, prefixes in await self.bot.db.fetch("SELECT * FROM prefixes;"):
                 self.prefixes[guild_id].append(prefixes)
 
-    async def cog_unload(self):
+    def cog_unload(self):
+        self.bot.loop.create_task(self.export_to_db())
+
+    async def export_to_db(self):
         for guild in self.bot.guilds:
             p = self.prefixes.get(guild.id, ["bl "])
             await self.bot.db.execute("INSERT INTO prefixes VALUES ($1);", p)
@@ -35,10 +38,10 @@ class Prefix(commands.Cog):
     @commands.group()
     async def prefix(self, ctx):
         if ctx.invoked_subcommand is None:
-            newline = "\n"
+            prefix_list = "\n".join(f"\"{prefix}\"" for prefix in self.prefixes[ctx.guild.id])
             embed = discord.Embed(
                 title=f"{ctx.guild.name}'s Prefixes",
-                description=f"{newline.join(prefix for prefix in self.prefixes[ctx.guild.id])}",
+                description=prefix_list,
                 color=self.bot.color
             )
             await ctx.send(embed=embed)
@@ -64,8 +67,6 @@ class Prefix(commands.Cog):
     async def remove(self, ctx, prefix: str):
         guild_prefixes = self.prefixes[ctx.guild.id]
         prefix = guild_prefixes.pop(guild_prefixes.index(prefix))
-
-
 
 
 def setup(bot):

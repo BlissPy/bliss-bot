@@ -1,4 +1,5 @@
 import math
+import platform
 import os
 from io import BytesIO
 
@@ -195,7 +196,11 @@ def _lsd(img: Image):
 
 
 def _gay(img: Image):
-    with Image(filename=f"{os.path.dirname(os.path.realpath(__file__))}\\image_assets\\gay.jpg") as gay:
+    if os.name == 'nt':
+        slash = "\\"
+    else:
+        slash = "/"
+    with Image(filename=f"{os.path.dirname(os.path.realpath(__file__))}{slash}image_assets{slash}gay.jpg") as gay:
         img.transform_colorspace("gray")
         img.transform_colorspace("rgb")
         gay.transparentize(.50)
