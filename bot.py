@@ -39,11 +39,9 @@ class Bot(commands.AutoShardedBot):
 
         self.is_accepting_commands = False
 
-    async def prefix(self, bot, message):
-        try:
-            return await self.cogs["Prefix"].get_prefix(bot, message)
-        except KeyError:
-            return commands.when_mentioned_or(*bot.prefixes)(bot, message)
+    @staticmethod
+    async def prefix(bot, message):
+        return commands.when_mentioned_or(*bot.prefixes)(bot, message)
 
     async def on_ready(self):
         print("Initiated.")
@@ -72,14 +70,6 @@ class Bot(commands.AutoShardedBot):
         super().run(*args, **kwargs)
 
     async def logout(self):
-        try:
-            await self.cogs["Prefix"].export_to_db()
-        except KeyError:
-            pass
-        try:
-            await self.cogs["Image Manipulation"].session.close()
-        except KeyError:
-            pass
         await self.close()
 
 
