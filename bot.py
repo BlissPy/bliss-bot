@@ -69,10 +69,14 @@ class Bot(commands.AutoShardedBot):
         super().run(*args, **kwargs)
 
     async def logout(self):
-        if self.cogs["Prefix"]:
+        try:
             await self.cogs["Prefix"].export_to_db()
-        if self.cogs["Imaging"]:
-            await self.cogs["Imaging"].session.close()
+        except KeyError:
+            pass
+        try:
+            await self.cogs["Image Manipulation"].session.close()
+        except KeyError:
+            pass
         await self.close()
 
 
