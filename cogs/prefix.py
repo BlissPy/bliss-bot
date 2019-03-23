@@ -18,7 +18,7 @@ class Prefix(commands.Cog):
         await self.bot.wait_until_ready()
         if self.bot.db is not None:
             for guild in self.bot.guilds:
-                self.prefixes.setdefault(guild.id, ["bl "])
+                self.prefixes.update({guild.id: ["bl "]})
 
             for guild_id, prefixes in await self.bot.db.fetch("SELECT * FROM prefixes;"):
                 self.prefixes[guild_id].append("test")
