@@ -1,4 +1,4 @@
 CREATE TABLE IF NOT EXISTS prefixes (
     guildid BIGINT PRIMARY KEY,
-    prefix VARCHAR(32)[] NOT NULL
+    prefix VARCHAR(32) NOT NULL
 );
