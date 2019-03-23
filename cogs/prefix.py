@@ -23,10 +23,12 @@ class Prefix(commands.Cog):
             for guild_id, prefixes in await self.bot.db.fetch("SELECT * FROM prefixes;"):
                 self.prefixes[guild_id].append(prefixes)
 
-    def cog_unload(self):
-        self.bot.loop.create_task(self.export_to_db())
-
     async def export_to_db(self):
+        await self.bot.db.execute("DROP TABLE prefixes;")
+        await self.bot.db.execute("""CREATE TABLE IF NOT EXISTS prefixes (
+guildid BIGINT PRIMARY KEY,
+prefix VARCHAR(32)[] NOT NULL
+);""")
         for guild in self.bot.guilds:
             p = self.prefixes.get(guild.id, ["bl "])
             await self.bot.db.execute("INSERT INTO prefixes VALUES ($1);", p)
@@ -53,7 +55,6 @@ class Prefix(commands.Cog):
             raise commands.BadArgument("Your prefix must be less than 32 characters.")
 
         self.prefixes[ctx.guild.id].append(prefix)
-        await self.bot.db.execute("DELETE ")
 
         embed = discord.Embed(
             title=f"Prefix Added To{ctx.guild.name}",
@@ -67,6 +68,8 @@ class Prefix(commands.Cog):
     async def remove(self, ctx, prefix: str):
         guild_prefixes = self.prefixes[ctx.guild.id]
         prefix = guild_prefixes.pop(guild_prefixes.index(prefix))
+
+        await self.bot.db.execute("DELETE ")
 
 
 def setup(bot):

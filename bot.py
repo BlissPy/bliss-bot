@@ -68,6 +68,13 @@ class Bot(commands.AutoShardedBot):
                 traceback.print_exc()
         super().run(*args, **kwargs)
 
+    async def logout(self):
+        if self.cogs["Prefix"]:
+            await self.cogs["Prefix"].export_to_db()
+        if self.cogs["Imaging"]:
+            await self.cogs["Imaging"].session.close()
+        await self.close()
+
 
 if __name__ == "__main__":
     # This will stop it from showing up in the help menu

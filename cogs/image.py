@@ -24,9 +24,6 @@ class Imaging(commands.Cog, name="Image Manipulation",
         async with self.session.get(member.avatar_url_as(format="png")) as get:
             return io.BytesIO(await get.read())
 
-    def cog_unload(self):
-        self.bot.loop.create_task(self.session.close())
-
     @commands.command(name="magic")
     async def magic(self, ctx, *, member: discord.Member = None):
         """Content aware scale a member's avatar into another planet."""
