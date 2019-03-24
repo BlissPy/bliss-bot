@@ -45,7 +45,7 @@ class Prefix(commands.Cog):
     @prefix.command()
     @commands.has_permissions(manage_server=True)
     async def set(self, ctx, prefix: str):
-        """"""
+        """Set the prefix for the server."""
         self.prefixes.update({ctx.guild.id: prefix.lower()})
         embed = discord.Embed(
             name=f"Prefix Updated",
@@ -57,6 +57,7 @@ class Prefix(commands.Cog):
     @prefix.command(aliases=["remove", "delete"])
     @commands.has_permissions(manage_server=True)
     async def reset(self, ctx):
+        """Reset the prefix for the server."""
         old_prefix = self.prefixes.pop(ctx.guild.id)
         embed = discord.Embed(
             title="Prefix Reset",
