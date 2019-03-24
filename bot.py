@@ -39,7 +39,7 @@ class Bot(commands.AutoShardedBot):
     async def prefix(self, bot, message):
         if "Prefix" in self.cogs:
             custom_prefix = self.cogs["Prefix"].prefixes.get(message.guild.id, bot.default_prefix)
-            commands.when_mentioned_or(*{bot.default_prefix, custom_prefix})(bot, message)
+            return commands.when_mentioned_or(*{bot.default_prefix, custom_prefix})(bot, message)
         return commands.when_mentioned_or(bot.default_prefix)(bot, message)
 
     async def on_ready(self):
