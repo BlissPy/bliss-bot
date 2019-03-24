@@ -26,10 +26,7 @@ class Bot(commands.AutoShardedBot):
             "cogs.database",
             "cogs.prefix"
         ]
-        self.prefixes = [
-            "bl ",
-            ":bangbang:"
-        ]
+        self.default_prefix = "bl "
         self.db_credentials = {
             "host": "127.0.0.1",
             "password": "zanebot",
@@ -39,9 +36,11 @@ class Bot(commands.AutoShardedBot):
 
         self.is_accepting_commands = False
 
-    @staticmethod
-    async def prefix(bot, message):
-        return commands.when_mentioned_or(*bot.prefixes)(bot, message)
+    async def prefix(self, bot, message):
+        if "Prefix" in self.cogs:
+            custom_prefix = self.cogs["Prefix"].get(message.guild.id, bot.default_prefix)
+            commands.when_mentioned_or(*{bot.default_prefix, custom_prefix})(bot, message)
+        return commands.when_mentioned_or(bot.default_prefix)(bot, message)
 
     async def on_ready(self):
         print("Initiated.")
@@ -70,6 +69,11 @@ class Bot(commands.AutoShardedBot):
         super().run(*args, **kwargs)
 
     async def logout(self):
+        if "Imaging" in self.cogs:
+            await self.cogs["Imaging"].session.close()
+        if "Prefix" in self.cogs:
+            await self.cogs["Prefix"].export_db()
+        print("Goodbye.")
         await self.close()
 
 

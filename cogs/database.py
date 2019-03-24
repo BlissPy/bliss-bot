@@ -1,3 +1,4 @@
+import traceback
 import time
 import io
 
@@ -23,6 +24,7 @@ class Database(commands.Cog):
 
         self.bot.db = db
 
+    # https://github.com/Rapptz/RoboDanny/blob/rewrite/cogs/admin.py
     @staticmethod
     def cleanup_code(content):
         """Automatically removes code blocks from the code."""
@@ -35,6 +37,7 @@ class Database(commands.Cog):
 
     # https://github.com/Rapptz/RoboDanny/blob/rewrite/cogs/admin.py#L208-L249
     @commands.command(hidden=True)
+    @commands.is_owner()
     async def sql(self, ctx, *, query: str):
         """Run some SQL."""
         query = self.cleanup_code(query)
