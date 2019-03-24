@@ -27,7 +27,7 @@ class Prefix(commands.Cog):
 
     async def export_db(self):
         for guild_id, prefix in self.prefixes.items():
-            await self.bot.db.execute("INSERT INTO prefixes VALUES ($1, $2)", (guild_id, prefix))
+            await self.bot.db.execute("INSERT INTO prefixes VALUES ($1, $2)", guild_id, prefix)
 
     @commands.group()
     async def prefix(self, ctx):
