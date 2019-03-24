@@ -1,3 +1,5 @@
+import asyncio
+
 from discord.ext import commands
 import discord
 
@@ -10,10 +12,18 @@ class Prefix(commands.Cog):
         self.bot.loop.create_task(self.import_db())
 
     async def import_db(self):
-        for guild_id, prefix in await self.bot.db.fetch("SELECT * FROM prefixes;"):
-            if self.bot.get_guild(guild_id) is not None:
-                self.prefixes.update({guild_id: prefix})
-        await self.bot.db.execute("DELETE FROM prefixes;")
+        tries = 0
+        while True:
+            if self.bot.db is not None:
+                for guild_id, prefix in await self.bot.db.fetch("SELECT * FROM prefixes;"):
+                    if self.bot.get_guild(guild_id) is not None:
+                        self.prefixes.update({guild_id: prefix})
+                return await self.bot.db.execute("DELETE FROM prefixes;")
+            elif tries > 30:
+                print("Failed to load Database for prefixes.")
+            else:
+                await asyncio.sleep(1)
+                tries += 1
 
     async def export_db(self):
         for guild_id, prefix in self.prefixes.items():
