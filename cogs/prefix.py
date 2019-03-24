@@ -35,7 +35,7 @@ class Prefix(commands.Cog):
             prefix = self.prefixes.get(ctx.guild.id, self.bot.default_prefix)
             embed = discord.Embed(
                 name=f"{ctx.guild.name}'s Prefix",
-                description=f"The prefix in this server is `{prefix}`.",
+                description=f"The prefix in this server is \"{prefix}\".",
                 color=self.bot.color
             )
             await ctx.send(embed=embed)
@@ -46,7 +46,7 @@ class Prefix(commands.Cog):
         self.prefixes.update({ctx.guild.id: prefix.lower()})
         embed = discord.Embed(
             name=f"Prefix Updated",
-            description=f"You can now activate me in this server with the prefix `{prefix.lower()}`.",
+            description=f"You can now activate me in this server with the prefix \"{prefix.lower()}\".",
             color=self.bot.color
         )
         await ctx.send(embed=embed)
@@ -57,8 +57,8 @@ class Prefix(commands.Cog):
         old_prefix = self.prefixes.pop(ctx.guild.id)
         embed = discord.Embed(
             title="Prefix Reset",
-            description=f"""`{old_prefix}` will no longer work in this server.
-            You are now using the default prefix, `{self.bot.default_prefix}`.""",
+            description=f"""\"{old_prefix}\" will no longer work in this server.
+            You are now using the default prefix, \"{self.bot.default_prefix}\".""",
             color=self.bot.color
         )
         await ctx.send(embed=embed)
