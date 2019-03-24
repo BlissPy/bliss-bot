@@ -18,7 +18,7 @@ class Prefix(commands.Cog):
                 for guild_id, prefix in await self.bot.db.fetch("SELECT * FROM prefixes;"):
                     if self.bot.get_guild(guild_id) is not None:
                         self.prefixes.update({guild_id: prefix})
-                return await self.bot.db.execute("DELETE FROM prefixes;")
+                return
             elif tries > 30:
                 print("Failed to load Database for prefixes.")
             else:
@@ -28,9 +28,11 @@ class Prefix(commands.Cog):
     async def export_db(self):
         for guild_id, prefix in self.prefixes.items():
             await self.bot.db.execute("INSERT INTO prefixes VALUES ($1, $2)", guild_id, prefix)
+            return await self.bot.db.execute("DELETE FROM prefixes;")
 
     @commands.group()
     async def prefix(self, ctx):
+        """View the current prefix. Sub-commands include set prefix and reset prefix."""
         if ctx.invoked_subcommand is None:
             prefix = self.prefixes.get(ctx.guild.id, self.bot.default_prefix)
             embed = discord.Embed(
@@ -43,6 +45,7 @@ class Prefix(commands.Cog):
     @prefix.command()
     @commands.has_permissions(manage_server=True)
     async def set(self, ctx, prefix: str):
+        """"""
         self.prefixes.update({ctx.guild.id: prefix.lower()})
         embed = discord.Embed(
             name=f"Prefix Updated",
