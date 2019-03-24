@@ -7,10 +7,7 @@ class Prefix(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.prefixes = {}
-        if self.bot.db is not None:
-            self.bot.loop.create_task(self.import_db())
-        else:
-            print("Database is None. Load the database cog and restart the prefix cog to enable custom prefixes.")
+        self.bot.loop.create_task(self.import_db())
 
     async def import_db(self):
         for guild_id, prefix in await self.bot.db.fetch("SELECT * FROM prefixes;"):
@@ -22,7 +19,7 @@ class Prefix(commands.Cog):
         for guild_id, prefix in self.prefixes.items():
             await self.bot.db.execute("INSERT INTO prefixes VALUES ($1, $2)", (guild_id, prefix))
 
-    @commands.command()
+    @commands.group()
     async def prefix(self, ctx):
         if ctx.invoked_subcommand is None:
             prefix = self.prefixes.get(ctx.guild.id, self.bot.default_prefix)
@@ -33,7 +30,7 @@ class Prefix(commands.Cog):
             )
             await ctx.send(embed=embed)
 
-    @commands.command()
+    @prefix.command()
     @commands.has_permissions(manage_server=True)
     async def set(self, ctx, prefix: str):
         self.prefixes.update({ctx.guild.id: prefix.lower()})
@@ -44,7 +41,7 @@ class Prefix(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command(aliases=["remove", "delete"])
+    @prefix.command(aliases=["remove", "delete"])
     @commands.has_permissions(manage_server=True)
     async def reset(self, ctx):
         old_prefix = self.prefixes.pop(ctx.guild.id)
