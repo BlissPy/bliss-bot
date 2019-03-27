@@ -39,7 +39,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
     @commands.Cog.listener()
     async def on_ready(self):
         for command in self.walk_commands():
-            if not command.cache:
+            if not command.image_cache:
                 self.cache.update({command.name: {}})
 
     @commands.command(cls=ImageCommand, cache=True, name="magic")
