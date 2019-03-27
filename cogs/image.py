@@ -11,7 +11,7 @@ import blissops as imageops
 class ImageCommand(commands.Command):
 
     def __init__(self, *args, **kwargs):
-        self.cache_images = kwargs.pop("cache")
+        self.cache_images = kwargs.get("cache", False)
         super().__init__(*args, **kwargs)
 
 
