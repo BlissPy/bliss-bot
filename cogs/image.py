@@ -5,7 +5,14 @@ import aiohttp
 import discord
 from discord.ext import commands
 
-import imageops
+import blissops as imageops
+
+
+class ImageCommand(commands.Command):
+
+    def __init__(self, *args, **kwargs):
+        self.cache_images = kwargs.pop("cache")
+        super().__init__(*args, **kwargs)
 
 
 class Imaging(commands.Cog, name="Image Manipulation",
@@ -14,6 +21,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
     def __init__(self, bot):
         self.bot = bot
         self.session = None
+
+        self.cache = {}
 
         bot.loop.create_task(self.create_session())
 
@@ -24,7 +33,16 @@ class Imaging(commands.Cog, name="Image Manipulation",
         async with self.session.get(member.avatar_url_as(format="png")) as get:
             return io.BytesIO(await get.read())
 
-    @commands.command(name="magic")
+    async def add_to_cache(self, command_name, bytes, member):
+        self.cache[command_name].update({member.avatar_url: bytes})
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        for command in self.walk_commands():
+            if not command.cache:
+                self.cache.update({command.name: {}})
+
+    @commands.command(cls=ImageCommand, cache=True, name="magic")
     async def magic(self, ctx, *, member: discord.Member = None):
         """Content aware scale a member's avatar into another planet."""
         if member is None:
@@ -43,7 +61,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="deepfry")
+    @commands.command(cls=ImageCommand, cache=True, name="deepfry")
     async def deepfry(self, ctx, *, member: discord.Member = None):
         """Deepfry a member's avatar. It still needs more jpeg."""
         if member is None:
@@ -62,7 +80,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="emboss")
+    @commands.command(cls=ImageCommand, cache=True, name="emboss")
     async def emboss(self, ctx, *, member: discord.Member = None):
         """Emboss a member's avatar,"""
         if member is None:
@@ -81,7 +99,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="vaporwave")
+    @commands.command(cls=ImageCommand, cache=True, name="vaporwave")
     async def vaporwave(self, ctx, *, member: discord.Member = None):
         """vvvaaapppooorrrwwwaaavvveee"""
         if member is None:
@@ -100,7 +118,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="floor")
+    @commands.command(cls=ImageCommand, cache=True, name="floor")
     async def floor(self, ctx, *, member: discord.Member = None):
         """The floor is lava and the lava is a member's avatar."""
         if member is None:
@@ -119,7 +137,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="concave")
+    @commands.command(cls=ImageCommand, cache=True, name="concave")
     async def concave(self, ctx, *, member: discord.Member = None):
         """View a member's avatar through a concave lens."""
         if member is None:
@@ -138,7 +156,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="convex")
+    @commands.command(cls=ImageCommand, cache=True, name="convex")
     async def convex(self, ctx, *, member: discord.Member = None):
         """View a member's avatar through a convex lens."""
         if member is None:
@@ -157,7 +175,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="invert")
+    @commands.command(cls=ImageCommand, cache=True, name="invert")
     async def invert(self, ctx, *, member: discord.Member = None):
         """Invert a member's avatar."""
         if member is None:
@@ -176,7 +194,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="desat")
+    @commands.command(cls=ImageCommand, cache=True, name="desat")
     async def desat(self, ctx, member: typing.Union[discord.Member] = None, threshold: int = 1):
         """Desaturate a member's avatar."""
         if member is None:
@@ -195,7 +213,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="sat")
+    @commands.command(cls=ImageCommand, cache=True, name="sat")
     async def sat(self, ctx, member: typing.Union[discord.Member] = None, threshold: int = 1):
         """Saturate a member's avatar."""
         if member is None:
@@ -214,7 +232,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="lsd")
+    @commands.command(cls=ImageCommand, cache=True, name="lsd")
     async def lsd(self, ctx, *, member: discord.Member = None):
         """Take some LSD and look at a member's avatar."""
         if member is None:
@@ -233,7 +251,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="posterize")
+    @commands.command(cls=ImageCommand, cache=True, name="posterize")
     async def posterize(self, ctx, *, member: discord.Member = None):
         """Posterize a member's avatar,"""
         if member is None:
@@ -252,7 +270,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="grayscale", aliases=["greyscale"])
+    @commands.command(cls=ImageCommand, cache=True, name="grayscale", aliases=["greyscale"])
     async def grayscale(self, ctx, *, member: discord.Member = None):
         """Grayscale a member's avatar."""
         if member is None:
@@ -271,7 +289,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="bend")
+    @commands.command(cls=ImageCommand, cache=True, name="bend")
     async def bend(self, ctx, *, member: discord.Member = None):
         """Bend a member's avatar."""
         if member is None:
@@ -290,7 +308,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="edge")
+    @commands.command(cls=ImageCommand, cache=True, name="edge")
     async def edge(self, ctx, *, member: discord.Member = None):
         """Make a member's avatar sharp and edgy."""
         if member is None:
@@ -309,7 +327,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="gay")
+    @commands.command(cls=ImageCommand, cache=True, name="gay")
     async def gay(self, ctx, *, member: discord.Member = None):
         """Make someone gay. Use at your own discretion."""
         if member is None:
@@ -328,7 +346,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="sort")
+    @commands.command(cls=ImageCommand, cache=True, name="sort")
     async def sort(self, ctx, *, member: discord.Member = None):
         """Sort the pixels of a member's avatar. Makes a pretty gradient most of the time."""
         if member is None:
@@ -347,7 +365,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="sobel")
+    @commands.command(cls=ImageCommand, cache=True, name="sobel")
     async def sobel(self, ctx, *, member: discord.Member = None):
         """Sobel filter a member's avatar."""
         if member is None:
@@ -366,7 +384,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(name="ascii")
+    @commands.command(cls=ImageCommand, cache=False, name="ascii")
     async def ascii_art(self, ctx, *, member: discord.Member = None):
         """Make ascii-art out of a member's avatar."""
         if member is None:
