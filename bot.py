@@ -24,7 +24,8 @@ class Bot(commands.AutoShardedBot):
             "cogs.misc",
             "cogs.errorhandler",
             "cogs.database",
-            "cogs.prefix"
+            "cogs.prefix",
+            "cogs.fun"
         ]
         self.default_prefix = "bl "
         self.db_credentials = {

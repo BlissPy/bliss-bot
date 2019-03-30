@@ -12,6 +12,8 @@ class ImageCommand(commands.Command):
 
     def __init__(self, *args, **kwargs):
         self.cache_images = kwargs.get("cache", False)
+        self.avatar_size = kwargs,get("avatar_size", 256)
+        self.avatar
         super().__init__(*args, **kwargs)
 
 
@@ -29,8 +31,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
     async def create_session(self):
         self.session = aiohttp.ClientSession()
 
-    async def avatar_bytes(self, member: discord.Member):
-        async with self.session.get(member.avatar_url_as(format="png")) as get:
+    async def avatar_bytes(self, command: ImageCommand, member: discord.Member):
+        async with self.session.get(member.avatar_url_as(format="png", size=command.avatar_size)) as get:
             return io.BytesIO(await get.read())
 
     async def add_to_cache(self, command_name, bytes, member):
@@ -61,7 +63,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(cls=ImageCommand, cache=True, name="deepfry")
+    @commands.command(cls=ImageCommand, cache=True, name="deepfry", avatar_size=512)
     async def deepfry(self, ctx, *, member: discord.Member = None):
         """Deepfry a member's avatar. It still needs more jpeg."""
         if member is None:
@@ -99,7 +101,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(cls=ImageCommand, cache=True, name="vaporwave")
+    @commands.command(cls=ImageCommand, cache=True, name="vaporwave", avatar_size=512)
     async def vaporwave(self, ctx, *, member: discord.Member = None):
         """vvvaaapppooorrrwwwaaavvveee"""
         if member is None:
@@ -118,7 +120,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(cls=ImageCommand, cache=True, name="floor")
+    @commands.command(cls=ImageCommand, cache=True, name="floor", avatar_size=32)
     async def floor(self, ctx, *, member: discord.Member = None):
         """The floor is lava and the lava is a member's avatar."""
         if member is None:
@@ -175,7 +177,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(cls=ImageCommand, cache=True, name="invert")
+    @commands.command(cls=ImageCommand, cache=True, name="invert", avatar_size=1024)
     async def invert(self, ctx, *, member: discord.Member = None):
         """Invert a member's avatar."""
         if member is None:
@@ -270,7 +272,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(cls=ImageCommand, cache=True, name="grayscale", aliases=["greyscale"])
+    @commands.command(cls=ImageCommand, cache=True, name="grayscale", aliases=["greyscale"], avatar_size=512)
     async def grayscale(self, ctx, *, member: discord.Member = None):
         """Grayscale a member's avatar."""
         if member is None:
