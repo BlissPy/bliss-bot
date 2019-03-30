@@ -384,6 +384,25 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
+    @commands.command(cls=ImageCommand, cache=True, name="shuffle")
+    async def shuffle(self, ctx, *, member: discord.Member = None):
+        """Shuffle the pixels in a member's avatar."""
+        if member is None:
+            member = ctx.author
+
+        b = await self.avatar_bytes(member)
+        img = await imageops.shuffle(b)
+        f = discord.File(img, filename="shuffle.png")
+
+        embed = discord.Embed(
+            title=f"{ctx.command.name.upper()} | {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        embed.set_image(url=f"attachment://{ctx.command.name}.png")
+
+        await ctx.send(embed=embed, file=f)
+
     @commands.command(cls=ImageCommand, cache=False, name="ascii")
     async def ascii_art(self, ctx, *, member: discord.Member = None):
         """Make ascii-art out of a member's avatar."""
