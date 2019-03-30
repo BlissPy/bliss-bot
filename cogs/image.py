@@ -58,8 +58,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.magic(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="magic.png")
@@ -82,8 +82,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.deepfry(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
 
@@ -107,8 +107,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.emboss(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="emboss.png")
@@ -131,8 +131,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.vaporwave(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="vaporwave.png")
@@ -155,8 +155,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.floor(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="floor.png")
@@ -179,8 +179,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.concave(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="concave.png")
@@ -203,8 +203,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.convex(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="convex.png")
@@ -227,8 +227,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.invert(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="invert.png")
@@ -251,8 +251,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.desat(b, threshold)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="desat.png")
@@ -275,8 +275,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.sat(b, threshold)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="sat.png")
@@ -299,8 +299,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.lsd(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="lsd.png")
@@ -323,8 +323,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.posterize(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="posterize.png")
@@ -347,8 +347,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.grayscale(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="grayscale.png")
@@ -371,8 +371,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.bend(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="bend.png")
@@ -395,8 +395,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.edge(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="edge.png")
@@ -419,8 +419,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.gay(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="gay.png")
@@ -443,8 +443,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.sort(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="sort.png")
@@ -467,8 +467,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.sobel(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="sobel.png")
@@ -491,8 +491,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
-            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.shuffle(b)
+            await self.add_to_cache(ctx.command.name, img, member)
         else:
             img = cached
         f = discord.File(img, filename="shuffle.png")
