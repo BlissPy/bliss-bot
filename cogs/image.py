@@ -49,7 +49,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.magic(b)
         f = discord.File(img, filename="magic.png")
 
