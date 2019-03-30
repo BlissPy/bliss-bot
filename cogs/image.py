@@ -27,6 +27,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         self.cache = {}
 
         bot.loop.create_task(self.create_session())
+        bot.loop.create_task(self.generate_cache_structure())
 
     async def create_session(self):
         self.session = aiohttp.ClientSession()
@@ -39,6 +40,9 @@ class Imaging(commands.Cog, name="Image Manipulation",
         self.cache[command.name].update({member.avatar_url: copy.deepcopy(img_bytes)})
 
     async def from_cache(self, command, member):
+        if self.cache == {}:
+            return None
+
         if member.avatar_url in self.cache[command.name]:
             return copy.deepcopy(self.cache[command.name][member.avatar_url])
         return None
@@ -65,8 +69,8 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         return ret
 
-    @commands.Cog.listener()
-    async def on_ready(self):
+    async def generate_cache_structure(self):
+        await self.bot.wait_until_ready()
         for command in self.walk_commands():
             if command.cache_images:
                 self.cache.update({command.name: {}})
