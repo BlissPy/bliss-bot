@@ -55,6 +55,16 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         return image_bytes
 
+    async def generate_image_embed(self, ctx, member):
+        ret = discord.Embed(
+            title=f"{ctx.command.name.capitalize()} on {member.display_name}",
+            description=f"Requested by {ctx.author.mention}.",
+            color=self.bot.color
+        )
+        ret.set_image(url="attachment://generated.png")
+
+        return ret
+
     @commands.Cog.listener()
     async def on_ready(self):
         for command in self.walk_commands():
@@ -70,12 +80,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.magic)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -88,12 +93,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.deepfry)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -106,12 +106,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.emboss)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -124,12 +119,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.vaporwave)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -142,12 +132,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.floor)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -160,12 +145,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.concave)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -178,12 +158,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.convex)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -196,12 +171,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.invert)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -214,12 +184,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.desat, threshold)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -232,12 +197,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.sat, threshold)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -250,12 +210,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.lsd)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -268,12 +223,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.posterize)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -286,12 +236,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.grayscale)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -304,12 +249,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.bend)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -322,12 +262,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.edge)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -340,12 +275,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.gay)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -358,12 +288,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.sort)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -376,12 +301,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.sobel)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
@@ -394,12 +314,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         img = await self.generate_image(ctx.command, member, imageops.shuffle)
         f = discord.File(img, "generated.png")
 
-        embed = discord.Embed(
-            title=f"{ctx.command.name.upper()} | {member.display_name}",
-            description=f"Requested by {ctx.author.mention}.",
-            color=self.bot.color
-        )
-        embed.set_image(url="attachment://generated.png")
+        embed = await self.generate_image_embed(ctx, member)
 
         await ctx.send(embed=embed, file=f)
 
