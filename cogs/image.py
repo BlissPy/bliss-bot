@@ -58,6 +58,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.magic(b)
         else:
             img = cached
@@ -81,6 +82,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.deepfry(b)
         else:
             img = cached
@@ -105,6 +107,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.emboss(b)
         else:
             img = cached
@@ -128,6 +131,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.vaporwave(b)
         else:
             img = cached
@@ -151,6 +155,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.floor(b)
         else:
             img = cached
@@ -174,6 +179,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.concave(b)
         else:
             img = cached
@@ -197,6 +203,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.convex(b)
         else:
             img = cached
@@ -220,6 +227,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.invert(b)
         else:
             img = cached
@@ -243,6 +251,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.desat(b, threshold)
         else:
             img = cached
@@ -266,6 +275,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.sat(b, threshold)
         else:
             img = cached
@@ -289,6 +299,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.lsd(b)
         else:
             img = cached
@@ -312,6 +323,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.posterize(b)
         else:
             img = cached
@@ -335,6 +347,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.grayscale(b)
         else:
             img = cached
@@ -358,6 +371,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.bend(b)
         else:
             img = cached
@@ -381,6 +395,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.edge(b)
         else:
             img = cached
@@ -404,6 +419,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.gay(b)
         else:
             img = cached
@@ -427,6 +443,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.sort(b)
         else:
             img = cached
@@ -450,6 +467,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.sobel(b)
         else:
             img = cached
@@ -473,6 +491,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         cached = await self.from_cache(ctx.command.name, member)
         if cached is None:
             b = await self.avatar_bytes(ctx.command, member)
+            await self.add_to_cache(ctx.command.name, b, member)
             img = await imageops.shuffle(b)
         else:
             img = cached
