@@ -68,7 +68,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.deepfry(b)
         f = discord.File(img, filename="deepfry.png")
 
@@ -87,7 +87,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.emboss(b)
         f = discord.File(img, filename="emboss.png")
 
@@ -106,7 +106,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.vaporwave(b)
         f = discord.File(img, filename="vaporwave.png")
 
@@ -125,7 +125,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.floor(b)
         f = discord.File(img, filename="floor.png")
 
@@ -144,7 +144,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.concave(b)
         f = discord.File(img, filename="concave.png")
 
@@ -163,7 +163,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.convex(b)
         f = discord.File(img, filename="convex.png")
 
@@ -182,7 +182,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.invert(b)
         f = discord.File(img, filename="invert.png")
 
@@ -201,7 +201,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.desat(b, threshold)
         f = discord.File(img, filename="desat.png")
 
@@ -220,7 +220,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.sat(b, threshold)
         f = discord.File(img, filename="sat.png")
 
@@ -239,7 +239,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.lsd(b)
         f = discord.File(img, filename="lsd.png")
 
@@ -258,7 +258,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.posterize(b)
         f = discord.File(img, filename="posterize.png")
 
@@ -277,7 +277,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.grayscale(b)
         f = discord.File(img, filename="grayscale.png")
 
@@ -296,7 +296,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.bend(b)
         f = discord.File(img, filename="bend.png")
 
@@ -315,7 +315,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.edge(b)
         f = discord.File(img, filename="edge.png")
 
@@ -334,7 +334,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.gay(b)
         f = discord.File(img, filename="gay.png")
 
@@ -353,7 +353,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.sort(b)
         f = discord.File(img, filename="sort.png")
 
@@ -372,7 +372,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.sobel(b)
         f = discord.File(img, filename="sobel.png")
 
@@ -391,7 +391,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
         if member is None:
             member = ctx.author
 
-        b = await self.avatar_bytes(member)
+        b = await self.avatar_bytes(ctx.command, member)
         img = await imageops.shuffle(b)
         f = discord.File(img, filename="shuffle.png")
 
@@ -411,7 +411,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             member = ctx.author
 
         async with ctx.typing():
-            b = await self.avatar_bytes(member)
+            b = await self.avatar_bytes(ctx.command, member)
             art = await imageops.ascii_art(b)
             try:
                 async with self.session.post("https://wastebin.travitia.xyz/documents", data=art) as post:
