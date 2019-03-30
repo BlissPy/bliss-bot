@@ -9,6 +9,17 @@ from discord.ext import commands
 
 class Miscellaneous(commands.Cog):
 
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.Cog.listener()
+    async def on_member_update(self, before, after):
+        if before.nick != after.nick:
+            await self.bot.db.execute(f"INSERT INTO usernames VALUES ({after.id}, $1)", after.nick)
+
+        if before.name != after.name:
+            await self.bot.db.execute(f"INSERT INTO usernames VALUES ({after.id}, $1)", after.name)
+
     @staticmethod
     def _format_json(string: str):
         return json.dumps(string, indent=2, ensure_ascii=False, sort_keys=True)
@@ -134,4 +145,4 @@ class Miscellaneous(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(Miscellaneous())
+    bot.add_cog(Miscellaneous(bot))
