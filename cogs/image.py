@@ -12,8 +12,7 @@ class ImageCommand(commands.Command):
 
     def __init__(self, *args, **kwargs):
         self.cache_images = kwargs.get("cache", False)
-        self.avatar_size = kwargs,get("avatar_size", 256)
-        self.avatar
+        self.avatar_size = kwargs.get("avatar_size", 256)
         super().__init__(*args, **kwargs)
 
 
