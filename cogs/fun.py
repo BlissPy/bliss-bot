@@ -16,7 +16,7 @@ class Fun(commands.Cog):
             limit += 1
             messages = await ctx.channel.history(limit=limit, before=ctx.message).flatten()
             message = messages[len(messages)-1]
-            phrase = message.content
+            phrase = message.clean_content
         await ctx.send("".join(random.choice([p.upper, p.lower])() for p in phrase))
 
     @commands.command(hidden=True)
