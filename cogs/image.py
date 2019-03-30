@@ -119,7 +119,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
         await ctx.send(embed=embed, file=f)
 
-    @commands.command(cls=ImageCommand, cache=True, name="floor", avatar_size=32)
+    @commands.command(cls=ImageCommand, cache=True, name="floor", avatar_size=128)
     async def floor(self, ctx, *, member: discord.Member = None):
         """The floor is lava and the lava is a member's avatar."""
         if member is None:
