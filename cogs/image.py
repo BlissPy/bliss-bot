@@ -70,7 +70,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -95,7 +95,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -119,7 +119,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -143,7 +143,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -167,7 +167,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -191,7 +191,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -215,7 +215,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -239,7 +239,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -263,7 +263,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -287,7 +287,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -311,7 +311,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -335,7 +335,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -359,7 +359,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -383,7 +383,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -407,7 +407,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -431,7 +431,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -455,7 +455,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -479,7 +479,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
@@ -503,7 +503,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
             description=f"Requested by {ctx.author.mention}.",
             color=self.bot.color
         )
-        embed.set_image(url="generated.png")
+        embed.set_image(url="attachment://generated.png")
 
         await ctx.send(embed=embed, file=f)
 
