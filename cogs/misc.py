@@ -150,7 +150,7 @@ class Miscellaneous(commands.Cog):
 
         aliases = []
 
-        for alias in await self.bot.db.fetch("SELECT name FROM usernames;"):
+        for alias in await self.bot.db.fetch("SELECT name FROM usernames WHERE userid = $1;", member.id):
             if alias != member.name and alias != member.nick:
                 aliases.append(alias)
 
