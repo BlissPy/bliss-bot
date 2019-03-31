@@ -22,7 +22,7 @@ class Map:
 
         self.import_locations()
 
-        self.players = {}  # set(Player)
+        self.players = set()  # set(Player)
         self.bot.loop.create_task(self.import_players())
 
     def import_locations(self):
