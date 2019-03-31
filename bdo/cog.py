@@ -72,4 +72,4 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
 
 
 def setup(bot):
-    bot.append_cog(BDOCog(bot))
+    bot.add_cog(BDOCog(bot))
