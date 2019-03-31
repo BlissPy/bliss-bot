@@ -149,13 +149,12 @@ class Miscellaneous(commands.Cog):
             member = ctx.author
 
         aliases = []
-
         for alias in await self.bot.db.fetch("SELECT name FROM usernames WHERE userid = $1;", member.id):
             if alias != member.name and alias != member.nick:
                 aliases.append([a for a in alias.values()][0])
 
         if aliases:
-            akas = "\n".join(f"`{alias}`" for alias in aliases)
+            akas = "\n".join(f"- {alias}" for alias in aliases)
         else:
             akas = "This user has no known aliases."
 
