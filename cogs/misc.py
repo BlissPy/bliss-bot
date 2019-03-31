@@ -12,14 +12,6 @@ class Miscellaneous(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.Cog.listener()
-    async def on_member_update(self, before, after):
-        if before.nick != after.nick:
-            await self.bot.db.execute(f"INSERT INTO usernames VALUES ({after.id}, $1)", after.nick)
-
-        if before.name != after.name:
-            await self.bot.db.execute(f"INSERT INTO usernames VALUES ({after.id}, $1)", after.name)
-
     @staticmethod
     def _format_json(string: str):
         return json.dumps(string, indent=2, ensure_ascii=False, sort_keys=True)
@@ -142,6 +134,40 @@ class Miscellaneous(commands.Cog):
         """Send you the link to the bot's source."""
         await ctx.send("Bot Source: **<https://github.com/BlissPy/bliss-bot>**\n"
                        "Image Function Source: **<https://github.com/BlissPy/bliss-ops>**")
+
+    @commands.Cog.listener()
+    async def on_member_update(self, before, after):
+        if before.nick != after.nick:
+            await self.bot.db.execute(f"INSERT INTO usernames VALUES ({after.id}, $1)", after.nick)
+
+        if before.name != after.name:
+            await self.bot.db.execute(f"INSERT INTO usernames VALUES ({after.id}, $1)", after.name)
+
+    @commands.command()
+    async def aka(self, ctx, *, member: discord.Member = None):
+        if member is None:
+            member = ctx.author
+
+        aliases = []
+
+        for alias in await self.bot.db.fetch("SELECT name FROM usernames;"):
+            if alias != member.name and alias != member.nick:
+                aliases.append(alias)
+
+        if aliases:
+            akas = "\n".join(f"`{alias}`" for alias in aliases)
+        else:
+            akas = "This user has no known aliases."
+
+        embed = discord.Embed(
+            title=f"{member.name}'s Aliases",
+            description=akas,
+            color=self.bot.color
+        )
+        embed.set_thumbnail(
+            url=member.avatar_url_as(size=64, format="png")
+        )
+        await ctx.send(embed=embed)
 
 
 def setup(bot):
