@@ -54,6 +54,11 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
 
     def __init__(self, bot):
         self.bot = bot
+        self.map = None
+        self.bot.loop.create_task(self.create_map())
+
+    async def create_map(self):
+        await self.bot.wait_until_ready()
         self.map = Map(bot)
 
     @commands.command()
