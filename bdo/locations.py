@@ -1,7 +1,5 @@
 import math
 
-import ujson
-
 
 class Coord:
     """
@@ -37,9 +35,9 @@ class Location:
             "dp": data.get("ap")
         }
 
-        self.coords = set()
+        self.coords = []
         coord_data = data.get("coords")
         for coord in coord_data:
-            self.coords.add(Coord(coord[0], coord[1]))
+            self.coords.append(Coord(coord[0], coord[1]))
 
         self.size = len(self.coords)

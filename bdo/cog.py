@@ -22,7 +22,7 @@ class Map:
 
         self.import_locations()
 
-        self.players = set()  # set(Player)
+        self.players = []  # list(Player)
         self.bot.loop.create_task(self.import_players())
 
     def import_locations(self):
@@ -36,7 +36,7 @@ class Map:
         for ownerid in await self.bot.db.fetch("SELECT ownerid FROM players;"):
             try:
                 ply = Player(self, self.bot.get_user(ownerid))
-                self.players.add(ply)
+                self.players.append(ply)
             except discord.NotFound:
                 pass
 
@@ -46,7 +46,7 @@ class Map:
             ownerid, name, exp, x, y,
         )
         player = Player(self, ownerid)
-        self.players.add(player)
+        self.players.append(player)
         return player
 
 
@@ -72,4 +72,4 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
 
 
 def setup(bot):
-    bot.add_cog(BDOCog(bot))
+    bot.append_cog(BDOCog(bot))

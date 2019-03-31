@@ -1,5 +1,3 @@
-import discord
-
 from bdo.locations import Coord
 
 
