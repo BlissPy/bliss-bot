@@ -1,0 +1,33 @@
+{
+  "locations": [
+    {
+      "name": "Velia",
+      "id": 1,
+      "description": "Although looking like a fishing town with a strong connection to the sea, it's actually more of a farming village. One reason for that are the shallow waters that surround the port town. Another were the constant failures to launch the project to make it a harbor city.",
+      "recommended": 10,
+      "coords": [
+        [8, 3], [9, 3], [10, 3],
+        [8, 4], [9, 4], [10, 4]
+      ]
+    },
+    {
+      "name": "Heidel",
+      "id": 2,
+      "description": "Heidel is the capital city of Serendia. It's surrounded by many resources and is considered a main trading city. It lies to the south-south east of Velia on the southern side of Heidel Pass.",
+      "recommended": 15,
+      "coords": [
+        [8, 5], [9, 5], [10, 5]
+      ]
+    },
+    {
+      "name": "Gilsh",
+      "id": 2,
+      "description": "Though the town was founded by merchants from Keplan and Calpheon, the population here is still small and there is a somewhat strangely heavy atmosphere about the place. This newly built town is lead by Chief Freharau and it is protected by guards lead by Ceasar who were dispatched by Heidel at the request of the village.",
+      "recommended": 20,
+      "coords": [
+        [6, 6], [7, 6], [8, 6],
+                        [8, 7], [9, 7], [10, 7]
+      ]
+    }
+  ]
+}

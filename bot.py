@@ -25,7 +25,8 @@ class Bot(commands.AutoShardedBot):
             "cogs.errorhandler",
             "cogs.database",
             "cogs.prefix",
-            "cogs.fun"
+            "cogs.fun",
+            "bdo.cog"
         ]
         self.default_prefix = "bl "
         self.db_credentials = {
