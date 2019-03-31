@@ -64,3 +64,7 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         await self.map.create_player(ctx.author.id, name)
 
         await ctx.send(f"Welcome to Bliss Desert Online, {name}!")
+
+
+def setup(bot):
+    bot.add_cog(BDOCog(bot))
