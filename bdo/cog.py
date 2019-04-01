@@ -81,7 +81,6 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         return commands.check(predicate)
 
     @commands.command()
-    @has_player()
     async def create(self, ctx, *, name: str):
         if len(name) > 16:
             return await ctx.send("That name is too long.")
@@ -91,6 +90,7 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         await ctx.send(f"Welcome to Bliss Desert Online, {name}!")
 
     @commands.command()
+    @has_player()
     async def location(self, ctx, location_name: str = None):
         if location_name is None:
             player = self.map.get_player()
@@ -111,7 +111,6 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         )
 
         await ctx.send(embed=embed)
-
 
 
 def setup(bot):
