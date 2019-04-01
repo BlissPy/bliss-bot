@@ -3,21 +3,29 @@ from bdo.locations import Coord
 
 class Player:
 
-    def __init__(self, manager, owner_id):
+    def __init__(self, manager, owner):
         self.manager = manager
-        self.owner_id = owner_id
+        self.owner = owner
 
     @property
     async def name(self):
-        return await self.manager.bot.db.fetch("SELECT name FROM players WHERE ownerid = $1", self.owner_id)
+        record = await self.manager.bot.db.fetch("SELECT name FROM players WHERE ownerid = $1", self.owner.id)
+        for value in record[0].values():
+            return value
 
     @property
     async def exp(self):
-        return await self.manager.bot.db.fetch("SELECT name FROM players WHERE exp = $1", self.owner_id)
+        record = await self.manager.bot.db.fetch("SELECT name FROM players WHERE ownerid = $1", self.owner.id)
+        for value in record[0].values():
+            return value
 
     @property
     async def coord(self):
-        x, y = await self.manager.bot.db.fetch("SELECT l_x, l_y FROM players WHERE exp = $1", self.owner_id)
+        records = await self.manager.bot.db.fetch("SELECT l_x, l_y FROM players WHERE ownerid = $1", self.owner.id)
+        coords = []
+        for record in records:
+            for value in record.values():
+                coords.append(value)
         return Coord(x, y)
 
     @property

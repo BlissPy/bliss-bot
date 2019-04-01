@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS usernames (
 
 CREATE TABLE IF NOT EXISTS players (
     ownerid BIGINT PRIMARY KEY,
-    name TEXT,
-    exp BIGINT,
-    l_x INT,
-    l_y INT
+    name TEXT NOT NULL,
+    exp BIGINT NOT NULL,
+    l_x INT NOT NULL,
+    l_y INT NOT NULL
 )
