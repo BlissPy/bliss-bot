@@ -72,10 +72,12 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
     async def create_map(self):
         await self.bot.wait_until_ready()
         self.map = Map(self.bot)
+        self.bot.map = self.map
 
-    def has_player(self):
+    @staticmethod
+    def has_player():
         def predicate(ctx):
-            if ctx.author.id in self.map.players:
+            if ctx.author.id in ctx.bot.map.players:
                 return True
             return False
         return commands.check(predicate)
