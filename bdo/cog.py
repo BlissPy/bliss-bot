@@ -62,14 +62,6 @@ class Map:
         return ply
 
 
-def has_player():
-    def predicate(ctx):
-        if ctx.author.id in ctx.bot.map.players:
-            return True
-        return False
-    return commands.check(predicate)
-
-
 class BDOCog(commands.Cog, name="Bliss Desert Online"):
 
     def __init__(self, bot):
