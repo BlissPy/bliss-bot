@@ -94,7 +94,7 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
             title=await player.name + "'s status",
             color=self.bot.color
         )
-        embed.add_field(name="Location", value=await player.location.name)
+        embed.add_field(name="Location", value=(await player.location).name)
         embed.add_field(name="Coord Location", value=await player.coord)
         embed.add_field(name="EXP", value="{} EXP Points".format(await player.exp))
 
