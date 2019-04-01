@@ -27,7 +27,7 @@ class Player:
     async def location(self):
         c = await self.coord
         x, y = c.x, c.y
-        for coord, location in self.manager.all_cords.items():
+        for coord, location in self.manager.all_coords.items():
             if coord.x == x and coord.y == y:
                 return location
         return None

@@ -11,7 +11,7 @@ class Coord:
         self.x = x
         self.y = y
 
-    def __str(self):
+    def __str__(self):
         return f"({self.x}, {self.y})"
 
     def distance_to(self, coord):
