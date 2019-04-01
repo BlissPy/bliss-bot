@@ -46,20 +46,18 @@ class Map:
                 self.all_coords.update({coord: loc})
 
     async def import_players(self):
-        for ownerid in await self.bot.db.fetch("SELECT ownerid FROM players;"):
-            try:
-                ply = Player(self, self.bot.get_user(ownerid))
-                self.players.update({ownerid: ply})
-            except discord.NotFound:
-                pass
+        for record in await self.bot.db.fetch("SELECT ownerid FROM players;"):
+            owner_id = record["ownerid"]
+            ply = Player(self, owner_id)
+            self.players.update({owner_id: ply})
 
-    async def create_player(self, ownerid: int, name: str, exp: int = 0, x: int = 8, y: int = 3):
+    async def create_player(self, owner_id: int, name: str, exp: int = 0, x: int = 8, y: int = 3):
         await self.bot.db.execute(
             "INSERT INTO players VALUES ($1, $2, $3, $4, $5)",
-            ownerid, name, exp, x, y,
+            owner_id, name, exp, x, y,
         )
-        ply = Player(self, ownerid)
-        self.players.update({ownerid: ply})
+        ply = Player(self, owner_id)
+        self.players.update({owner_id: ply})
         return ply
 
 
