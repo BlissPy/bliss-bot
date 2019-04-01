@@ -107,7 +107,7 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         else:
             location = self.map.get_location(location_name)
             if location is None:
-                await ctx.send("No location with that name or id exists. Please try again.")
+                return await ctx.send("No location with that name or id exists. Please try again.")
 
         embed = discord.Embed(
             title=location.name,
