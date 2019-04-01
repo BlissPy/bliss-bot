@@ -87,7 +87,7 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
     @require_player()
     async def location(self, ctx, location_name: str = None):
         if location_name is None:
-            player = self.map.get_player()
+            player = self.map.get_player(ctx.author.id)
             location = player.location
         else:
             location = self.map.get_location(location_name)
