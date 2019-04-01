@@ -31,3 +31,11 @@ class Player:
             if coord.x == x and coord.y == y:
                 return location
         return None
+
+    async def to_dict(self):
+        return {
+            "name": await self.name,
+            "exp": await self.exp,
+            "coord": await self.coord,
+            "location": await self.location
+        }

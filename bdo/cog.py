@@ -37,6 +37,8 @@ class Map:
                 lambda location: location.name.lower() == text.lower(),
                 list(self.locations.values())
             )
+        except KeyError:
+            return None
 
     def import_locations(self):
         for data in self.config:
@@ -85,19 +87,34 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
 
     @commands.command()
     @require_player()
+    async def status(self, ctx):
+        player = self.map.get_player(ctx.author.id)
+
+        embed = discord.Embed(
+            title=await player.name + "'s status",
+            color=self.bot.color
+        )
+        embed.add_field(name="Location", value=await player.location.name)
+        embed.add_field(name="Coord Location", value=await player.coord)
+        embed.add_field(name="EXP", value="{} EXP Points".format(await player.exp))
+
+    @commands.command()
+    @require_player()
     async def location(self, ctx, location_name: str = None):
         if location_name is None:
             player = self.map.get_player(ctx.author.id)
             location = await player.location
         else:
             location = self.map.get_location(location_name)
+            if location is None:
+                await ctx.send("No location with that name or id exists. Please try again.")
 
         embed = discord.Embed(
             title=location.name,
             description=location.description,
             color=self.bot.color
         )
-        embed.add_field(name="Recommended AP", value=location.recommended)
+        embed.add_field(name="Recommended AP", value=f"AP: {location.recommended['ap']}, DP: {location.recommended['dp']}")
         embed.add_field(name="Size", value=location.size)
         embed.add_field(
             name="Owned Coords",
