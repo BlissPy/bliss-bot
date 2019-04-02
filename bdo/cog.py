@@ -98,6 +98,8 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         embed.add_field(name="Coord Location", value=await player.coord)
         embed.add_field(name="EXP", value="{} EXP Points".format(await player.exp))
 
+        await ctx.send(embed=embed)
+
     @commands.command()
     @require_player()
     async def location(self, ctx, location_name: str = None):
