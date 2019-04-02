@@ -57,7 +57,7 @@ class Map:
         for data in self.config["monsters"]:
             monster = Monster(self, **data)
             for location in monster.spawn_locations:
-                location.append(monster)
+                location.monsters.append(monster)
             self.monsters.update({monster.id: monster})
 
     async def import_players(self):
