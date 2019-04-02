@@ -4,7 +4,9 @@ from discord.ext import commands
 
 from bdo.locations import Location
 from bdo.players import Player
+from bdo.monsters import Monster
 from bdo.utils.checks import lack_player, require_player
+from bdo.utils.random import choose_monster, win
 
 
 class Map:
@@ -21,12 +23,14 @@ class Map:
         self.locations = {}  # dict(id: Location)
         self.all_coords = {}  # dict(Coord: Location)
         self.import_locations()
-        
-        self.monsters = {} # dict(id: Monster)
+
+        self.monsters = {}  # dict(id: Monster)
         self.import_monsters()
 
         self.players = {}  # dict(owner_id: Player)
         self.bot.loop.create_task(self.import_players())
+
+        self.level_up_queue = []
 
     def get_player(self, owner_id):
         return self.players[owner_id]
@@ -48,7 +52,7 @@ class Map:
             self.locations.update({loc.id: loc})
             for coord in loc.coords:
                 self.all_coords.update({coord: loc})
-                
+
     def import_monsters(self):
         for data in self.config["monsters"]:
             monster = Monster(self, **data)
@@ -83,6 +87,13 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         await self.bot.wait_until_ready()
         self.map = Map(self.bot)
         self.bot.map = self.map
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if message.author.id in self.map.level_up_queue:
+            ply = self.map.get_player(message.author.id)
+            level = await ply.exp.level
+            await message.channel.send(f"{message.author.display_name}, {ply.name} has leveled up to {level}!")
 
     @commands.command()
     @lack_player()
@@ -133,6 +144,22 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         )
 
         await ctx.send(embed=embed)
+
+    @commands.command()
+    @require_player()
+    async def fight(self, ctx):
+        player = self.map.get_player(ctx.author.id)
+        location = await player.location
+        monster = choose_monster(location.monsters)
+        won = win(player, monster)
+        if won:
+            exp = monster.exp
+            await player.exp.add(exp)
+            status = "won"
+        else:
+            exp = 0
+            status = "lost"
+        await ctx.send(f"You fought a **{monster.name}** and **{status}**! (+{exp} EXP)")
 
 
 def setup(bot):
