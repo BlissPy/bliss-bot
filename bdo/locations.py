@@ -44,3 +44,4 @@ class Location:
             self.coords.append(Coord(coord[0], coord[1]))
 
         self.size = len(self.coords)
+        self.monsters = []
