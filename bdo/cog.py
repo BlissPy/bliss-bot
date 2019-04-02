@@ -15,13 +15,15 @@ class Map:
     def __init__(self, bot):
         self.bot = bot
 
+        with open("bdo_config.json", "r") as f:
+            self.config = ujson.load(f)
+
         self.locations = {}  # dict(id: Location)
         self.all_coords = {}  # dict(Coord: Location)
-
-        with open("bdo_config.json", "r") as f:
-            self.config = ujson.load(f)["locations"]
-
         self.import_locations()
+        
+        self.monsters = {} # dict(id: Monster)
+        self.import_monsters()
 
         self.players = {}  # dict(owner_id: Player)
         self.bot.loop.create_task(self.import_players())
@@ -41,11 +43,18 @@ class Map:
             return None
 
     def import_locations(self):
-        for data in self.config:
+        for data in self.config["locations"]:
             loc = Location(self, **data)
             self.locations.update({loc.id: loc})
             for coord in loc.coords:
                 self.all_coords.update({coord: loc})
+                
+    def import_monsters(self):
+        for data in self.config["monsters"]:
+            monster = Monster(self, **data)
+            for location in monster.spawn_locations:
+                location.append(monster)
+            self.monsters.update({monster.id: monster})
 
     async def import_players(self):
         for record in await self.bot.db.fetch("SELECT ownerid FROM players;"):
