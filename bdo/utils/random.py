@@ -21,4 +21,4 @@ async def win(player: Player, monster: Monster):
 
     win_chance = 1 - loss_chance
     p = [loss_chance, win_chance]
-    return np.random.choice([True, False], p=p)
+    return np.random.choice([False, True], p=p)

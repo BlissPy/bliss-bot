@@ -90,6 +90,8 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
 
     @commands.Cog.listener()
     async def on_message(self, message):
+        if self.map is None:
+            return
         if message.author.id in self.map.level_up_queue:
             ply = self.map.get_player(message.author.id)
             level = await ply.exp.level
