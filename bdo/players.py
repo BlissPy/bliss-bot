@@ -15,7 +15,7 @@ class Player:
     @property
     async def exp(self):
         record = await self.manager.bot.db.fetch("SELECT exp FROM players WHERE ownerid = $1", self.owner_id)
-        return record[0]['name']
+        return record[0]['exp']
 
     @property
     async def coord(self):
