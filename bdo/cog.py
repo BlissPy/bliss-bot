@@ -184,11 +184,45 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
             status = "lost"
         await ctx.send(f"You fought a **{monster.name}** and **{status}**! (+{exp} EXP)")
 
-    @commands.command(aliases=["level"])
+    @commands.group(aliases=["level"])
     @require_player()
-    async def exp(self, ctx):
-        player = self.map.get_player(ctx.author.id)
-        await ctx.send(f"{player.name}, you have **{player.exp.points} EXP points** which makes you **level {player.exp.level}**.")
+    async def exp(self, ctx, owner: discord.User = None):
+        if ctx.invoked_subcommand is None:
+            if owner is None:
+                owner = ctx.author
+            player = self.map.get_player(ctx.author.id)
+            await ctx.send(f"{player.name}, you have **{player.exp.points} EXP points** which makes you **level {player.exp.level}**.")
+                        
+    @exp.command()
+    @require_player()
+    @commands.is_owner()
+    async def exp_set(self, ctx, owner: typing.Optional[discord.User] = None, new_exp: int = 0):
+        if owner is None:
+            owner = ctx.author
+        player = self.map.get_player(owner.id)
+        old_exp = player.exp.points
+        old_level = player.exp.level
+         
+        new_exp = player.exp.set(new_exp)
+                        
+        await ctx.send(f"{player.name}'s EXP has been changed from {old_exp} (lvl {old_level}) to {new_exp} ({player.exp.level}).")
+                        
+    @commands.command()
+    @require_player()
+    async def walk(self, ctx, location: typing.Optional[str] = None, x: typing.Optional[int] = None, y: typing.Optional[int] = None)
+        if location is None and x is None:
+            return await ctx.send("This command allows you to go to a specific coordinate or a general location. Here are some "
+                                  "examples of it's use.\n`bl walk 8 3` to walk to the coords (8, 3)\n"
+                                  "`bl walk velia` to walk to Velia by it's name.\n"
+                                  "`bl walk 1` to walk to Velia by it's location ID.")
+                        
+        if location is None and not x is None and y is None:
+            location = self.map.get_location(x)
+                        
+        if loation is not None:
+            location = self.map.get_location(location)
+        else:
+            location = self.map.all_coords()
 
 
 def setup(bot):
