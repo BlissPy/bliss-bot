@@ -190,7 +190,7 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         if ctx.invoked_subcommand is None:
             if owner is None:
                 owner = ctx.author
-            player = self.map.get_player(ctx.author.id)
+            player = self.map.get_player(owner.id)
             await ctx.send(f"{player.name}, you have **{player.exp.points} EXP points** which makes you **level {player.exp.level}**.")
 
     @exp.command()
