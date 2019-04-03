@@ -18,9 +18,9 @@ class EXP:
 
     async def add(self, exp: int):
         current = await self.points
-        old_level = exp_to_level(exp)
+        old_level = exp_to_level(current)
         await self.player.manager.bot.db.execute("UPDATE players SET exp = $1 WHERE ownerid = $2", current + exp, self.player.owner_id)
-        if old_level != exp_to_level(current + exp):
+        if old_level < exp_to_level(current + exp):
             self.player.manager.level_up_queue.append(self.player.owner_id)
 
 
