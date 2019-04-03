@@ -4,7 +4,7 @@
       "name": "Steel Imp",
       "id": 1,
       "recommended_levels": [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      "rarity": 1,
+      "rarity": 0.5,
       "min_exp": 1,
       "max_exp": 2,
       "spawn_locations": [1]
@@ -13,7 +13,7 @@
       "name": "Grass Beetle",
       "id": 2,
       "recommended_levels": [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      "rarity": 2,
+      "rarity": 0.40,
       "min_exp": 2,
       "max_exp": 3,
       "spawn_locations": [1]
@@ -22,7 +22,7 @@
       "name": "Immature Tree Spirit",
       "id": 3,
       "recommended_levels": [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      "rarity": 3,
+      "rarity": 0.10,
       "min_exp": 2,
       "max_exp": 4,
       "spawn_locations": [1]
