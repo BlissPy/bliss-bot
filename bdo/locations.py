@@ -16,6 +16,9 @@ class Coord:
 
     def __str__(self):
         return f"({self.x}, {self.y})"
+    
+    def __repr__(self):
+        return f"<bdo.locations.Coord x={self.x} y=self.y>"
 
     def distance_to(self, coord):
         return coord_distance(self.x, self.y, coord.x, coord.y)
@@ -45,3 +48,9 @@ class Location:
 
         self.size = len(self.coords)
         self.monsters = []
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return f"<bdo.locations.Location name={self.name} id={self.id}>"
