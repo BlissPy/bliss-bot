@@ -93,9 +93,11 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         if self.map is None:
             return
         if message.author.id in self.map.level_up_queue:
+            self.map.level_up_queue.remove(message.author.id)
             ply = self.map.get_player(message.author.id)
             level = await ply.exp.level
-            await message.channel.send(f"{message.author.display_name}, {ply.name} has leveled up to {level}!")
+            name = await ply.name
+            await message.channel.send(f"{message.author.display_name}, {name} has leveled up to {level}! Keep going.")
 
     @commands.command()
     @lack_player()
