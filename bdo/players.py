@@ -52,5 +52,5 @@ class Player:
         return None
 
     async def move(self, x, y):
-        await self.manager.bot.db.execute("UPDATE l_x = $1, l_y = $2 WHERE ownerid = $3", x, y, self.owner_id)
+        await self.manager.bot.db.execute("UPDATE players SET l_x = $1, l_y = $2 WHERE ownerid = $3", x, y, self.owner_id)
         return await self.coord
