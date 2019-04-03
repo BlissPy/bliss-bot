@@ -64,7 +64,7 @@ class Map:
             self.monsters.update({monster.id: monster})
 
     async def import_players(self):
-        for record in await self.bot.db.fetch("SELECT ownerid FROM players;"):
+        for record in await self.bot.db.fetch("SELECT * FROM players;"):
             ply = Player(self, record["ownerid"], record["name"], record["l_x"], record["l_y"], record["exp"])
             self.players.update({record["ownerid"]: ply})
 
