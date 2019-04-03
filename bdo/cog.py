@@ -206,23 +206,24 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         new_exp = player.exp.set(new_exp)
                         
         await ctx.send(f"{player.name}'s EXP has been changed from {old_exp} (lvl {old_level}) to {new_exp} ({player.exp.level}).")
+  
+                        # todo: finish this lol
+#     @commands.command()
+#     @require_player()
+#     async def walk(self, ctx, location: typing.Optional[str] = None, x: typing.Optional[int] = None, y: typing.Optional[int] = None)
+#         if location is None and x is None:
+#             return await ctx.send("This command allows you to go to a specific coordinate or a general location. Here are some "
+#                                   "examples of it's use.\n`bl walk 8 3` to walk to the coords (8, 3)\n"
+#                                   "`bl walk velia` to walk to Velia by it's name.\n"
+#                                   "`bl walk 1` to walk to Velia by it's location ID.")
                         
-    @commands.command()
-    @require_player()
-    async def walk(self, ctx, location: typing.Optional[str] = None, x: typing.Optional[int] = None, y: typing.Optional[int] = None)
-        if location is None and x is None:
-            return await ctx.send("This command allows you to go to a specific coordinate or a general location. Here are some "
-                                  "examples of it's use.\n`bl walk 8 3` to walk to the coords (8, 3)\n"
-                                  "`bl walk velia` to walk to Velia by it's name.\n"
-                                  "`bl walk 1` to walk to Velia by it's location ID.")
+#         if location is None and not x is None and y is None:
+#             location = self.map.get_location(x)
                         
-        if location is None and not x is None and y is None:
-            location = self.map.get_location(x)
-                        
-        if loation is not None:
-            location = self.map.get_location(location)
-        else:
-            location = self.map.all_coords()
+#         if loation is not None:
+#             location = self.map.get_location(location)
+#         else:
+#             location = self.map.all_coords()
 
 
 def setup(bot):
