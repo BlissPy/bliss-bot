@@ -1,6 +1,9 @@
 import math
 
 
+from bdo.utils.math import coord_distance
+
+
 class Coord:
     """
     A coordinate in/for a Map, Location, or Player.
@@ -15,10 +18,7 @@ class Coord:
         return f"({self.x}, {self.y})"
 
     def distance_to(self, coord):
-        x1, y1 = self.x, self.y
-        x2, y2 = coord.x, coord.y
-
-        return math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+        return coord_distance(self.x, self.y, coord.x, coord.y)
 
 
 class Location:
