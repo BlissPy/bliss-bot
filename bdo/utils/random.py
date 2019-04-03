@@ -11,8 +11,8 @@ def choose_monster(monsters: list):
     return np.random.choice(monsters, p=p)
 
 
-async def win(player: Player, monster: Monster):
-    level = await player.exp.level
+def win(player: Player, monster: Monster):
+    level = player.exp.level
 
     if level in monster.recommended_levels:
         loss_chance = 0.075

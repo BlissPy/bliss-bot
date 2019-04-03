@@ -33,6 +33,7 @@ class Map:
         self.bot.loop.create_task(self.import_players())
 
         self.level_up_queue = []
+        self.level_down_queue = []
 
     def get_player(self, owner_id):
         return self.players[owner_id]
@@ -64,16 +65,15 @@ class Map:
 
     async def import_players(self):
         for record in await self.bot.db.fetch("SELECT ownerid FROM players;"):
-            owner_id = record["ownerid"]
-            ply = Player(self, owner_id)
-            self.players.update({owner_id: ply})
+            ply = Player(self, record["owner_id"], record["name"], record["l_x"], record["l_y"], record["exp"])
+            self.players.update({record["owner_id"]: ply})
 
     async def create_player(self, owner_id: int, name: str, exp: int = 0, x: int = 8, y: int = 3):
         await self.bot.db.execute(
             "INSERT INTO players VALUES ($1, $2, $3, $4, $5)",
             owner_id, name, exp, x, y,
         )
-        ply = Player(self, owner_id)
+        ply = Player(self, owner_id, name, x, y, exp)
         self.players.update({owner_id: ply})
         return ply
 
@@ -94,12 +94,15 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
     async def on_message(self, message):
         if self.map is None:
             return
+
         if message.author.id in self.map.level_up_queue:
             self.map.level_up_queue.remove(message.author.id)
             ply = self.map.get_player(message.author.id)
-            level = await ply.exp.level
-            name = await ply.name
-            await message.channel.send(f"{message.author.display_name}, {name} has leveled up to {level}! Keep going.")
+            await message.channel.send(f"{message.author.display_name}, {ply.name} has leveled up to {ply.exp.level}! Keep going.")
+        elif message.author.id in self.map.level_down_queue:
+            self.map.level_down_queue.remove(message.author.id)
+            ply = self.map.get_player(message.author.id)
+            await message.channel.send(f"{message.author.display_name}, {ply.name} has leveled down to {ply.exp.level}. Yikes.")
 
     @commands.command()
     @require_player()
@@ -108,10 +111,9 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         if owner is None:
             owner = ctx.author
         player = self.map.get_player(owner.id)
-        name = await player.name
-        old = await player.coord
+        old = player.coord
         new = await player.move(x, y)
-        await ctx.send(f"Moved {name} {round(old.distance_to(new), 2)}u from {old} to {new}.")
+        await ctx.send(f"Moved {player.name} {round(old.distance_to(new), 2)}u from {old} to {new}.")
 
     @commands.command()
     @lack_player()
@@ -129,13 +131,13 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         player = self.map.get_player(ctx.author.id)
 
         embed = discord.Embed(
-            title=await player.name + "'s status",
+            title=f"{player.name}'s status",
             color=self.bot.color
         )
-        embed.add_field(name="Location", value=(await player.location).name)
-        embed.add_field(name="Coord Location", value=await player.coord)
-        embed.add_field(name="EXP", value="{} EXP Points".format(await player.exp.points))
-        embed.add_field(name="Level", value="{}".format(await player.exp.level))
+        embed.add_field(name="Location", value=player.location.name)
+        embed.add_field(name="Coord Location", value=player.coord)
+        embed.add_field(name="EXP", value=f"{player.exp.points} EXP Points")
+        embed.add_field(name="Level", value=player.exp.level)
 
         await ctx.send(embed=embed)
 
@@ -144,7 +146,7 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
     async def location(self, ctx, location_name: str = None):
         if location_name is None:
             player = self.map.get_player(ctx.author.id)
-            location = await player.location
+            location = player.location
         else:
             location = self.map.get_location(location_name)
             if location is None:
@@ -168,12 +170,12 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
     @require_player()
     async def fight(self, ctx):
         player = self.map.get_player(ctx.author.id)
-        location = await player.location
+        location = player.location
         monster = choose_monster(location.monsters)
-        won = await win(player, monster)
+        won = win(player, monster)
         if won:
             exp = monster.exp
-            await player.exp.add(exp)
+            player.exp.add(exp)
             status = "won"
         else:
             exp = 0

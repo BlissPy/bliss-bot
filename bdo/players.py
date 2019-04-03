@@ -4,47 +4,45 @@ from bdo.utils.math import exp_to_level
 
 class EXP:
 
-    def __init__(self, player):
+    def __init__(self, player, exp):
         self.player = player
+        self.points = exp
 
     @property
-    async def level(self):
-        return exp_to_level(await self.points)
+    def level(self):
+        return exp_to_level(self.points)
 
-    @property
-    async def points(self):
-        record = await self.player.manager.bot.db.fetch("SELECT exp FROM players WHERE ownerid = $1", self.player.owner_id)
-        return record[0]['exp']
+    async def set(self, exp: int):
+        old_level = exp_to_level(self.points)
+
+        await self.player.manager.bot.db.execute("UPDATE players SET exp = $1 WHERE ownerid = $2", exp, self.player.owner_id)
+
+        if old_level < self.level:
+            self.player.manager.level_up_queue.append(self.player.owner_id)
+        elif old_level > self.level:
+            self.player.manager.level_down_queue.append(self.player.owner_id)
+        return self.points
 
     async def add(self, exp: int):
-        current = await self.points
-        old_level = exp_to_level(current)
-        await self.player.manager.bot.db.execute("UPDATE players SET exp = $1 WHERE ownerid = $2", current + exp, self.player.owner_id)
-        if old_level < exp_to_level(current + exp):
-            self.player.manager.level_up_queue.append(self.player.owner_id)
+        return await self.set(self.points + exp)
+
+    async def remove(self, exp: int):
+        return await self.set(self.points - exp)
 
 
 class Player:
 
-    def __init__(self, manager, owner_id: int):
+    def __init__(self, manager, owner_id: int, name: str, x, y, exp):
         self.manager = manager
         self.owner_id = owner_id
-        self.exp = EXP(self)
+
+        self.name = name
+        self.exp = EXP(self, exp)
+        self.coord = Coord(x, y)
 
     @property
-    async def name(self):
-        record = await self.manager.bot.db.fetch("SELECT name FROM players WHERE ownerid = $1", self.owner_id)
-        return record[0]['name']
-
-    @property
-    async def coord(self):
-        record = await self.manager.bot.db.fetch("SELECT l_x, l_y FROM players WHERE ownerid = $1", self.owner_id)
-        record = record[0]
-        return Coord(record["l_x"], record["l_y"])
-
-    @property
-    async def location(self):
-        c = await self.coord
+    def location(self):
+        c = self.coord
         x, y = c.x, c.y
         for coord, location in self.manager.all_coords.items():
             if coord.x == x and coord.y == y:
@@ -53,4 +51,5 @@ class Player:
 
     async def move(self, x, y):
         await self.manager.bot.db.execute("UPDATE players SET l_x = $1, l_y = $2 WHERE ownerid = $3", x, y, self.owner_id)
-        return await self.coord
+        self.coord = Coord(x, y)
+        return self.coord
