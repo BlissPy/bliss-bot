@@ -16,6 +16,7 @@ class EXP:
         old_level = exp_to_level(self.points)
 
         await self.player.manager.bot.db.execute("UPDATE players SET exp = $1 WHERE ownerid = $2", exp, self.player.owner_id)
+        self.points = exp
 
         if old_level < self.level:
             self.player.manager.level_up_queue.append(self.player.owner_id)

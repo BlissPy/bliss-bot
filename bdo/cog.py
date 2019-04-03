@@ -192,7 +192,7 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
                 owner = ctx.author
             player = self.map.get_player(ctx.author.id)
             await ctx.send(f"{player.name}, you have **{player.exp.points} EXP points** which makes you **level {player.exp.level}**.")
-                        
+
     @exp.command()
     @require_player()
     @commands.is_owner()
@@ -202,12 +202,12 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         player = self.map.get_player(owner.id)
         old_exp = player.exp.points
         old_level = player.exp.level
-         
+
         new_exp = player.exp.set(new_exp)
-                        
+
         await ctx.send(f"{player.name}'s EXP has been changed from {old_exp} (lvl {old_level}) to {new_exp} ({player.exp.level}).")
-  
-                        # todo: finish this lol
+
+#     # todo: finish this lol
 #     @commands.command()
 #     @require_player()
 #     async def walk(self, ctx, location: typing.Optional[str] = None, x: typing.Optional[int] = None, y: typing.Optional[int] = None)
@@ -216,10 +216,10 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
 #                                   "examples of it's use.\n`bl walk 8 3` to walk to the coords (8, 3)\n"
 #                                   "`bl walk velia` to walk to Velia by it's name.\n"
 #                                   "`bl walk 1` to walk to Velia by it's location ID.")
-                        
+
 #         if location is None and not x is None and y is None:
 #             location = self.map.get_location(x)
-                        
+
 #         if loation is not None:
 #             location = self.map.get_location(location)
 #         else:
