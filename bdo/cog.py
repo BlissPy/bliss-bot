@@ -125,7 +125,7 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
 
         await ctx.send(f"Welcome to Bliss Desert Online, {name}!")
 
-    @commands.command()
+    @commands.command(aliases=["profile"])
     @require_player()
     async def status(self, ctx):
         player = self.map.get_player(ctx.author.id)
@@ -138,6 +138,7 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         embed.add_field(name="Coord Location", value=player.coord)
         embed.add_field(name="EXP", value=f"{player.exp.points} EXP Points")
         embed.add_field(name="Level", value=player.exp.level)
+        embed.set_thumbnail(url=ctx.author.avatar_url)
 
         await ctx.send(embed=embed)
 
@@ -182,6 +183,12 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
             exp = 0
             status = "lost"
         await ctx.send(f"You fought a **{monster.name}** and **{status}**! (+{exp} EXP)")
+
+    @commands.command(aliases=["level"])
+    @require_player()
+    async def exp(self, ctx):
+        player = self.map.get_player(ctx.author.id)
+        await ctx.send(f"{player.name}, you have **{player.exp.points} EXP points** which makes you **level {player.exp.level}**.")
 
 
 def setup(bot):
