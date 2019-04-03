@@ -9,7 +9,7 @@ class EXP:
 
     @property
     async def level(self):
-        return exp_to_level(await self.points ** 0.5)
+        return exp_to_level(await self.points)
 
     @property
     async def points(self):
@@ -18,7 +18,7 @@ class EXP:
 
     async def add(self, exp: int):
         current = await self.points
-        old_level = await self.level
+        old_level = exp_to_level(exp)
         await self.player.manager.bot.db.execute("UPDATE players SET exp = $1 WHERE ownerid = $2", current + exp, self.player.owner_id)
         if old_level != exp_to_level(current + exp):
             self.player.manager.level_up_queue.append(self.player.owner_id)
@@ -50,11 +50,3 @@ class Player:
             if coord.x == x and coord.y == y:
                 return location
         return None
-
-    async def to_dict(self):
-        return {
-            "name": await self.name,
-            "exp": await self.exp,
-            "coord": await self.coord,
-            "location": await self.location
-        }
