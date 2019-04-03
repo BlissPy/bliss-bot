@@ -156,7 +156,7 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         player = self.map.get_player(ctx.author.id)
         location = await player.location
         monster = choose_monster(location.monsters)
-        won = win(player, monster)
+        won = await win(player, monster)
         if won:
             exp = monster.exp
             await player.exp.add(exp)
