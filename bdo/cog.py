@@ -65,8 +65,8 @@ class Map:
 
     async def import_players(self):
         for record in await self.bot.db.fetch("SELECT ownerid FROM players;"):
-            ply = Player(self, record["owner_id"], record["name"], record["l_x"], record["l_y"], record["exp"])
-            self.players.update({record["owner_id"]: ply})
+            ply = Player(self, record["ownerid"], record["name"], record["l_x"], record["l_y"], record["exp"])
+            self.players.update({record["ownerid"]: ply})
 
     async def create_player(self, owner_id: int, name: str, exp: int = 0, x: int = 8, y: int = 3):
         await self.bot.db.execute(
