@@ -168,6 +168,7 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
 
     @commands.command()
     @require_player()
+    @commands.cooldown(1, 3, commands.BucketType.member)
     async def fight(self, ctx):
         player = self.map.get_player(ctx.author.id)
         location = player.location
