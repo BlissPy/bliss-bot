@@ -6,6 +6,8 @@ from bdo.monsters import Monster
 
 def choose_monster(monsters: list):
     p = [monster.rarity for monster in monsters]
+    total = sum(p)
+    p = [total / r for r in p]
     return np.random.choice(monsters, p=p)
 
 
