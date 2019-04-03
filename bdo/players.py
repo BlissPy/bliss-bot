@@ -50,3 +50,7 @@ class Player:
             if coord.x == x and coord.y == y:
                 return location
         return None
+
+    async def move(self, x, y):
+        await self.manager.bot.db.execute("UPDATE l_x = $1, l_y = $2 WHERE ownerid = $3", x, y, self.owner_id)
+        return await self.coord

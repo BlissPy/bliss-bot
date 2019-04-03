@@ -1,3 +1,5 @@
+import typing
+
 import ujson
 import discord
 from discord.ext import commands
@@ -98,6 +100,18 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
             level = await ply.exp.level
             name = await ply.name
             await message.channel.send(f"{message.author.display_name}, {name} has leveled up to {level}! Keep going.")
+
+    @commands.command()
+    @require_player()
+    @commands.is_owner()
+    async def tp(self, ctx, owner: typing.Optional[discord.User] = None, x: int = 1, y: int = 1):
+        if owner is None:
+            owner = ctx.author
+        player = self.map.get_player(owner.id)
+        name = await player.name
+        old = await player.coord
+        new = await player.move(x, y)
+        await ctx.send(f"Moved {name} {round(old.distance_to(new), 2)}u from {old} to {new}.")
 
     @commands.command()
     @lack_player()
