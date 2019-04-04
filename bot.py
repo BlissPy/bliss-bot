@@ -27,7 +27,7 @@ class Bot(commands.AutoShardedBot):
             "cogs.database",
             "cogs.prefix",
             "cogs.fun",
-            "cogs.redis"
+            "cogs.redis",
             "bdo.cog"
         ]
         self.default_prefix = "bl "
