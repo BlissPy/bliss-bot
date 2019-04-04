@@ -138,7 +138,8 @@ class Miscellaneous(commands.Cog):
     @commands.Cog.listener()
     async def on_member_update(self, before, after):
         if before.nick != after.nick:
-            await self.bot.db.execute(f"INSERT INTO usernames VALUES ({after.id}, $1)", after.nick)
+            if after.nick is not None:
+                await self.bot.db.execute(f"INSERT INTO usernames VALUES ({after.id}, $1)", after.nick)
 
         if before.name != after.name:
             await self.bot.db.execute(f"INSERT INTO usernames VALUES ({after.id}, $1)", after.name)

@@ -11,6 +11,7 @@ class Bot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
         super().__init__(command_prefix=self.prefix, *args, **kwargs)
         self.db = None
+        self.redis = None
 
         self.color = discord.Color.from_rgb(
             254, 202, 87
@@ -26,6 +27,7 @@ class Bot(commands.AutoShardedBot):
             "cogs.database",
             "cogs.prefix",
             "cogs.fun",
+            "cogs.redis"
             "bdo.cog"
         ]
         self.default_prefix = "bl "

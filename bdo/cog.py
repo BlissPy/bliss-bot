@@ -215,11 +215,13 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
     @commands.is_owner()
     async def walk(self, ctx, location: typing.Optional[str] = None, x: typing.Optional[int] = None, y: typing.Optional[int] = None):
         if location is None and x is None:
-            return await ctx.send("This command allows you to go to a specific coordinate or a general location. Here are some examples of it's use.\n"
-                                    "`bl walk 8 3` to walk to the coords (8, 3)\n"
-                                    "`bl walk velia` to walk to Velia by it's name.\n"
-                                    "`bl walk 1` to walk to Velia by it's location ID.")
-        elif location is None and not x is None and y is None:
+            return await ctx.send(
+                "This command allows you to go to a specific coordinate or a general location. Here are some examples of it's use.\n"
+                "`bl walk 8 3` to walk to the coords (8, 3)\n"
+                "`bl walk velia` to walk to Velia by it's name.\n"
+                "`bl walk 1` to walk to Velia by it's location ID."
+            )
+        elif location is None and x is not None and y is None:
             location = self.map.get_location(x)
             coord = random.choice(location.coords)
         elif location is not None:
