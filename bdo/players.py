@@ -10,7 +10,7 @@ class EXP:
 
     @property
     def level(self):
-        return exp_to_level(self.points)
+        return exp_to_level(self.points) + 1
 
     async def set(self, exp: int):
         old_level = exp_to_level(self.points)
@@ -39,18 +39,16 @@ class Player:
 
         self.name = name
         self.exp = EXP(self, exp)
-        self.coord = Coord(x, y)
-
-    @property
-    def location(self):
-        c = self.coord
-        x, y = c.x, c.y
-        for coord, location in self.manager.all_coords.items():
-            if coord.x == x and coord.y == y:
-                return location
-        return None
+        self.coord = Coord(self.manager, x, y)
 
     async def move(self, x, y):
         await self.manager.bot.db.execute("UPDATE players SET l_x = $1, l_y = $2 WHERE ownerid = $3", x, y, self.owner_id)
-        self.coord = Coord(x, y)
+        self.coord = Coord(self.manager, x, y)
         return self.coord
+
+    async def rename(self, name):
+        await self.manager.bot.db.execute("UPDATE players SET name = $1 WHERE ownerid = $2", name, self.owner_id)
+
+    @property
+    def location(self):
+        return self.coord.location

@@ -1,7 +1,10 @@
+import datetime
+import random
 import typing
 
 import ujson
 import discord
+import humanize
 from discord.ext import commands
 
 from bdo.locations import Location
@@ -207,23 +210,33 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
 
         await ctx.send(f"{player.name}'s EXP has been changed from {old_exp} (lvl {old_level}) to {new_exp} ({player.exp.level}).")
 
-#     # todo: finish this lol
-#     @commands.command()
-#     @require_player()
-#     async def walk(self, ctx, location: typing.Optional[str] = None, x: typing.Optional[int] = None, y: typing.Optional[int] = None)
-#         if location is None and x is None:
-#             return await ctx.send("This command allows you to go to a specific coordinate or a general location. Here are some "
-#                                   "examples of it's use.\n`bl walk 8 3` to walk to the coords (8, 3)\n"
-#                                   "`bl walk velia` to walk to Velia by it's name.\n"
-#                                   "`bl walk 1` to walk to Velia by it's location ID.")
+    @commands.command()
+    @require_player()
+    @commands.is_owner()
+    async def walk(self, ctx, location: typing.Optional[str] = None, x: typing.Optional[int] = None, y: typing.Optional[int] = None):
+        if location is None and x is None:
+            return await ctx.send("This command allows you to go to a specific coordinate or a general location. Here are some examples of it's use.\n",
+                                    "`bl walk 8 3` to walk to the coords (8, 3)\n"
+                                    "`bl walk velia` to walk to Velia by it's name.\n"
+                                    "`bl walk 1` to walk to Velia by it's location ID.")
+        elif location is None and not x is None and y is None:
+            location = self.map.get_location(x)
+            coord = random.choice(location.coords)
+        elif location is not None:
+            location = self.map.get_location(location)
+            coord = random.choice(location.coords)
+        elif x is not None and y is not None:
+            coord = Coord(self.map, x, y)
+            location = coord.location
 
-#         if location is None and not x is None and y is None:
-#             location = self.map.get_location(x)
+        player = self.map.get_player(ctx.author.id)
 
-#         if loation is not None:
-#             location = self.map.get_location(location)
-#         else:
-#             location = self.map.all_coords()
+        await ctx.send(
+            "This action is not ready for use yet. Sending stats."
+            f"Traveling from {player.location} ({player.coord}) to {location} ({player.coord}),"
+            f"a distance of {player.coord.distance_to(coord)}u, will take {humanize.naturaltime(datetime.timedelta(seconds=player.coord.time_to(coord)))}."
+        )
+
 
 
 def setup(bot):
