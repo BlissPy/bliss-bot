@@ -7,7 +7,7 @@ import discord
 import humanize
 from discord.ext import commands
 
-from bdo.locations import Location
+from bdo.locations import Location, Coord
 from bdo.players import Player
 from bdo.monsters import Monster
 from bdo.utils.checks import lack_player, require_player
