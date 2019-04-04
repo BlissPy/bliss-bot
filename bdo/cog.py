@@ -180,7 +180,7 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         won = win(player, monster)
         if won:
             exp = monster.exp
-            player.exp.add(exp)
+            await player.exp.add(exp)
             status = "won"
         else:
             exp = 0
@@ -232,7 +232,7 @@ class BDOCog(commands.Cog, name="Bliss Desert Online"):
         player = self.map.get_player(ctx.author.id)
 
         await ctx.send(
-            "This action is not ready for use yet. Sending stats."
+            "This action is not ready for use yet. Sending stats.\n"
             f"Traveling from {player.location} ({player.coord}) to {location} ({player.coord}),"
             f"a distance of {player.coord.distance_to(coord)}u, will take {humanize.naturaltime(datetime.timedelta(seconds=player.coord.time_to(coord)))}."
         )
