@@ -10,7 +10,7 @@ class EXP:
 
     @property
     def level(self):
-        return exp_to_level(self.points) + 1
+        return exp_to_level(self.points)
 
     async def set(self, exp: int):
         old_level = exp_to_level(self.points)
