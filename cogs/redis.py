@@ -6,7 +6,7 @@ from discord.ext import commands
 
 class Redis(commands.Cog):
 
-    REDIS_ADDRESS = "127.0.0.1"
+    REDIS_ADDRESS = "127.0.0.1:42069"
 
     def __init__(self, bot):
         self.bot = bot
@@ -15,6 +15,7 @@ class Redis(commands.Cog):
 
     async def setup_redis(self):
         self.redis = await asyncio.wait_for(aioredis.create_pool(self.REDIS_ADDRESS), timeout=420.420)
+        self.bot.redis = self.redis
 
 
 def setup(bot):
