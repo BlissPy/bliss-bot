@@ -6,7 +6,7 @@ from discord.ext import commands
 
 class Redis(commands.Cog):
 
-    REDIS_ADDRESS = "127.0.0.1:42069"
+    REDIS_ADDRESS = "redis://127.0.0.1:42069"
 
     def __init__(self, bot):
         self.bot = bot
