@@ -24,7 +24,9 @@ class Redis(commands.Cog):
     async def redis(self, ctx, method: str, *redis_args):
         try:
             start = time.perf_counter()
-            out = await self.bot.redis.execute(method, *redis_args)
+            dirty_out = await self.bot.redis.execute(method, *redis_args)
+            # good idea @XuaTheGrate ty i love you so much lol
+            out = getattr(dirty_out, "decode", dirty_out.__str__)()
             duration = (time.perf_counter() - start) * 1000.0
         except:
             return await ctx.send(f'```py\n{traceback.format_exc()}\n```')
