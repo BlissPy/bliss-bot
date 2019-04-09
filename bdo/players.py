@@ -27,7 +27,7 @@ class EXP:
     async def add(self, exp: int):
         return await self.set(self.points + exp)
 
-    async def remove(self, exp: int):
+    async def remove(self, exp: int) -> int:
         return await self.set(self.points - exp)
 
 
@@ -41,7 +41,7 @@ class Player:
         self.exp = EXP(self, exp)
         self.coord = Coord(self.manager, x, y)
 
-    async def move(self, x, y):
+    async def move(self, x, y) -> Coord:
         await self.manager.bot.db.execute("UPDATE players SET l_x = $1, l_y = $2 WHERE ownerid = $3", x, y, self.owner_id)
         self.coord = Coord(self.manager, x, y)
         return self.coord
@@ -52,3 +52,6 @@ class Player:
     @property
     def location(self):
         return self.coord.location
+
+    async def travel(self, coord: Coord):
+        await self.manager.bot.redis.execute("SET", f"traveling_{self.owner_id}", f"{coord.x}_{coord.y}", "EX", f"{self.coord.time_to(coord)}")

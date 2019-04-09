@@ -8,7 +8,11 @@ class Fun(commands.Cog):
     OWO_MAP = {
         "o": "owo",
         "r": "w",
-        "ll": "y"
+        "ll": "y",
+        "O": "OwO",
+        "R": "Ww",
+        "Ll": "Y",
+        "LL": "Y"
     }
 
     def __init__(self, bot):
