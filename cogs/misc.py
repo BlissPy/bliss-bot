@@ -178,7 +178,7 @@ class Miscellaneous(commands.Cog):
     @commands.command()
     async def insult(self, ctx):
         async with self.session.get("https://evilinsult.com/generate_insult.php?lang=en&type=json") as resp:
-            json = str(await resp.read())
+            json = await resp.json()
 
         await ctx.send(json["insult"])
 
