@@ -11,6 +11,7 @@ class Miscellaneous(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.session = bot.cogs["Image Manipulation"].session
 
     @staticmethod
     def _format_json(string: str):
