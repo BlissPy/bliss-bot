@@ -180,7 +180,7 @@ class Miscellaneous(commands.Cog):
         async with self.session.get("https://evilinsult.com/generate_insult.php?lang=en") as resp:
             insult = await resp.read()
 
-        await ctx.send(insult)
+        await ctx.send(insult.decode())
 
 
 def setup(bot):
