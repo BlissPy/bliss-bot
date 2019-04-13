@@ -34,7 +34,7 @@ class Imaging(commands.Cog, name="Image Manipulation",
 
     async def avatar_bytes(self, command: ImageCommand, member: discord.Member):
         async with self.session.get(member.avatar_url_as(format="png", size=command.avatar_size)) as get:
-            return io.BytesIO(await get.read()).getvalue()
+            return str(io.BytesIO(await get.read()))
 
     async def add_to_cache(self, command, img_bytes, member):
         self.cache[command.name].update({member.avatar_url: copy.deepcopy(img_bytes)})
