@@ -169,6 +169,13 @@ class Miscellaneous(commands.Cog):
         )
         await ctx.send(embed=embed)
 
+    @commands.command()
+    async def insult(self, ctx):
+        async with self.bot.http._session.get("https://evilinsult.com/generate_insult.php?lang=en&type=json") as resp:
+            json = await resp.json()
+
+        await ctx.send(json["insult"])
+
 
 def setup(bot):
     bot.add_cog(Miscellaneous(bot))
