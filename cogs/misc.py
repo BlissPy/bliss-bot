@@ -2,6 +2,7 @@ import time
 import json
 import typing
 
+import aiohttp
 import discord
 import discord.http
 from discord.ext import commands
@@ -11,7 +12,11 @@ class Miscellaneous(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.session = bot.cogs["Image Manipulation"].session
+        self.session = None
+        self.bot.loop.create_task(self.create_session())
+
+    async def create_session(self):
+        self.session = aiohttp.ClientSession()
 
     @staticmethod
     def _format_json(string: str):
