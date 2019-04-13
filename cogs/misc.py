@@ -177,10 +177,10 @@ class Miscellaneous(commands.Cog):
 
     @commands.command()
     async def insult(self, ctx):
-        async with self.session.get("https://evilinsult.com/generate_insult.php?lang=en&type=json") as resp:
-            json = await resp.json()
+        async with self.session.get("https://evilinsult.com/generate_insult.php?lang=en") as resp:
+            insult = await resp.read()
 
-        await ctx.send(json["insult"])
+        await ctx.send(insult)
 
 
 def setup(bot):
