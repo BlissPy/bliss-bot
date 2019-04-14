@@ -75,6 +75,12 @@ class Imaging(commands.Cog, name="Image Manipulation",
             if command.cache_images:
                 self.cache.update({command.name: {}})
 
+    async def cog_before_invoke(self, ctx):
+        await ctx.message.add_reaction("<a:anim_discord_loading:514917324709429344>")
+
+    async def cog_after_invoke(self, ctx):
+        await ctx.message.remove_reaction("<a:anim_discord_loading:514917324709429344>", ctx.guild.me)
+
     @commands.command(cls=ImageCommand, cache=True, name="magic")
     async def magic(self, ctx, *, member: discord.Member = None):
         """Content aware scale a member's avatar into another planet."""
