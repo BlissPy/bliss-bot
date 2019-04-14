@@ -194,8 +194,11 @@ class Miscellaneous(commands.Cog):
             async with self.session.get(f"https://dog.ceo/api/breed/{breed}/images/random") as resp:
                 dog = (await resp.json())["message"]
 
-        async with self.session.get(dog) as resp:
-            b = io.BytesIO(await resp.read())
+        try:
+            async with self.session.get(dog) as resp:
+                b = io.BytesIO(await resp.read())
+        except aiohttp.InvalidURL:
+            return await ctx.send("Invalid breed.")
 
         await ctx.send(ctx.author.mention, file=discord.File(b, "dog.png"))
 
