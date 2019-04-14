@@ -191,9 +191,7 @@ class Miscellaneous(commands.Cog):
             async with self.session.get("https://dog.ceo/api/breeds/image/random") as resp:
                 dog = (await resp.json())["message"]
         else:
-            async with self.session.get(f"https://dog.ceo/api/breed/{breed}/image/random") as resp:
-                if not 300 > resp.status >= 200:
-                    return await ctx.send("Invalid breed.")
+            async with self.session.get(f"https://dog.ceo/api/breed/{breed}/images/random") as resp:
                 dog = (await resp.json())["message"]
 
         async with self.session.get(dog) as resp:
