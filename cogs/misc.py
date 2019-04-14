@@ -185,10 +185,16 @@ class Miscellaneous(commands.Cog):
         await ctx.send(insult.decode())
 
     @commands.command()
-    async def dog(self, ctx):
+    async def dog(self, ctx, *, breed: str = None):
         """Send a picture of a cute doggo."""
-        async with self.session.get("https://dog.ceo/api/breeds/image/random") as resp:
-            dog = (await resp.json())["message"]
+        if breed is None:
+            async with self.session.get("https://dog.ceo/api/breeds/image/random") as resp:
+                dog = (await resp.json())["message"]
+        else:
+            async with self.session.get(f"https://dog.ceo/api/{breed}/image/random") as resp:
+                if not 300 > resp.code >= 200:
+                    return await ctx.send("Invalid breed.")
+                dog = (await resp.json())["message"]
 
         async with self.session.get(dog) as resp:
             b = io.BytesIO(await resp.read())
