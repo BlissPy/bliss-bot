@@ -1,3 +1,4 @@
+import io
 import time
 import json
 import typing
@@ -177,10 +178,22 @@ class Miscellaneous(commands.Cog):
 
     @commands.command()
     async def insult(self, ctx):
+        """Just send an insult."""
         async with self.session.get("https://evilinsult.com/generate_insult.php?lang=en") as resp:
             insult = await resp.read()
 
         await ctx.send(insult.decode())
+
+    @commands.command()
+    async def dog(self, ctx):
+        """Send a picture of a cute doggo."""
+        async with self.session.get("https://dog.ceo/api/breeds/image/random") as resp:
+            dog = (await resp.json())["message"]
+
+        async with self.session.get(dog) as resp:
+            b = io.BytesIO(await resp.read())
+
+        await ctx.send(ctx.author.mention, file=discord.File(b, "dog.png"))
 
 
 def setup(bot):
